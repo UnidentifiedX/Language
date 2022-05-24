@@ -8,7 +8,7 @@ namespace Language
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             bool showTree = false;
 
@@ -38,7 +38,7 @@ namespace Language
                     Console.ForegroundColor = ConsoleColor.DarkGray;
 
                     PrettyPrint(syntaxTree.Root);
-                    Console.ForegroundColor = color;
+                    Console.ResetColor();
                 }
                 
 
@@ -81,7 +81,7 @@ namespace Language
 
             Console.WriteLine();
 
-            indent += isLast ? "    " : "│   ";
+            indent += isLast ? "   " : "│   ";
 
             var lastChild = node.GetChildren().LastOrDefault();
 

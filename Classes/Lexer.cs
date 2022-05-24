@@ -36,12 +36,8 @@ namespace Language.Classes
             _position++;
         }
 
-        public SyntaxToken NextToken()
-        {
-            // <numbers>
-            // + - * / ( )
-            // <whitespace>
-
+        public SyntaxToken Lex()
+        { 
             if(_position >= _text.Length)
                 return new SyntaxToken(SyntaxKind.EndOfFile, _position, "\0", null);
 
@@ -75,18 +71,21 @@ namespace Language.Classes
                 return new SyntaxToken(SyntaxKind.Whitespace, start, text, null);
             }
 
-            if (Current == '+')
-                return new SyntaxToken(SyntaxKind.Plus, _position++, "+", null);
-            else if (Current == '-')
-                return new SyntaxToken(SyntaxKind.Minus, _position++, "-", null);
-            else if (Current == '*')
-                return new SyntaxToken(SyntaxKind.Star, _position++, "*", null);
-            else if (Current == '/')
-                return new SyntaxToken(SyntaxKind.Slash, _position++, "/", null);
-            else if (Current == '(')
-                return new SyntaxToken(SyntaxKind.OpenParenthesis, _position++, "(", null);
-            else if (Current == ')')
-                return new SyntaxToken(SyntaxKind.CloseParenthesis, _position++, ")", null);
+            switch (Current)
+            {
+                case '+':
+                    return new SyntaxToken(SyntaxKind.Plus, _position++, "+", null);
+                case '-':
+                    return new SyntaxToken(SyntaxKind.Minus, _position++, "-", null);
+                case '*':
+                    return new SyntaxToken(SyntaxKind.Star, _position++, "*", null);
+                case '/':
+                    return new SyntaxToken(SyntaxKind.Slash, _position++, "/", null);
+                case '(':
+                    return new SyntaxToken(SyntaxKind.OpenParenthesis, _position++, "(", null);
+                case ')':
+                    return new SyntaxToken(SyntaxKind.CloseParenthesis, _position++, ")", null);
+            }
 
             _diagnostics.Add($"ERROR: Bad character input: '{Current}'");
             return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.Substring(_position - 1, 1), null);
@@ -126,8 +125,9 @@ namespace Language.Classes
         CloseParenthesis,
         BadToken,
         EndOfFile,
-        NumberExpression,
+        LiteralExpression,
         BinaryExpression,
-        ParenthesizedExpression
+        ParenthesizedExpression,
+        UnaryExpression
     }
 }

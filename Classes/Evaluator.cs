@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Language.Classes.Syntax;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,14 +22,23 @@ namespace Language.Classes
             return EvaluateExpression(_root);
         }
 
-        private int EvaluateExpression(ExpressionSyntax node)
+        public int EvaluateExpression(ExpressionSyntax node)
         {
-            // BinatyExpression
-            // NumberExpression
-
-            if (node is NumberExpressionSyntax n)
+            if (node is LiteralExpressionSyntax n)
             {
-                return (int)n.NumberToken.Value;
+                return (int)n.LiteralToken.Value;
+            }
+
+            if (node is UnaryExpressionSyntax u)
+            {
+                var operand = EvaluateExpression(u.Operand);
+
+                if (u.OperatorToken.Kind == SyntaxKind.Plus)
+                    return operand;
+                else if (u.OperatorToken.Kind == SyntaxKind.Minus)
+                    return -operand;
+                else
+                    throw new Exception($"Unexpected unary operator {u.OperatorToken.Kind}");
             }
 
             if (node is BinaryExpressionSyntax b)
@@ -44,6 +54,7 @@ namespace Language.Classes
                     return left * right;
                 else if (b.OperatorToken.Kind == SyntaxKind.Slash)
                     return left / right;
+                    
                 else
                     throw new Exception($"Unexpected binary operator {b.OperatorToken.Kind}");
             }
