@@ -30,9 +30,9 @@ namespace Language.Classes
                 case SyntaxKind.Equality:
                 case SyntaxKind.Inequality:
                     return 3;
-                case SyntaxKind.AmpersandAmpersand:
+                case SyntaxKind.And:
                     return 2;
-                case SyntaxKind.PipePipe:
+                case SyntaxKind.Or:
                     return 1;
                 default:
                     return 0;

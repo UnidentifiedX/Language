@@ -20,8 +20,8 @@
         False,
         IdentifierToken,
         Bang,
-        AmpersandAmpersand,
-        PipePipe,
+        And,
+        Or,
         Equality,
         Inequality
     }

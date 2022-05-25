@@ -38,8 +38,8 @@ namespace Language.Classes.Binding
             new BoundBinaryOperator(SyntaxKind.Equality, BoundBinaryOperatorKind.Equals, typeof(int), typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.Inequality, BoundBinaryOperatorKind.NotEquals, typeof(int), typeof(bool)),
 
-            new BoundBinaryOperator(SyntaxKind.AmpersandAmpersand, BoundBinaryOperatorKind.LogicalAnd, typeof(bool)),
-            new BoundBinaryOperator(SyntaxKind.PipePipe, BoundBinaryOperatorKind.LogicalOr, typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.And, BoundBinaryOperatorKind.LogicalAnd, typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.Or, BoundBinaryOperatorKind.LogicalOr, typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.Equality, BoundBinaryOperatorKind.Equals, typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.Inequality, BoundBinaryOperatorKind.NotEquals, typeof(bool)),
         };
