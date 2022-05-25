@@ -15,6 +15,7 @@ namespace Language.Classes.Syntax
             Expression = expression;
             CloseParenthesis = closeParenthesis;
         }
+
         public override SyntaxKind Kind => SyntaxKind.ParenthesizedExpression;
         public SyntaxToken OpenParenthesis { get; }
         public ExpressionSyntax Expression { get; }

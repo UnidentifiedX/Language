@@ -51,7 +51,7 @@ namespace Language.Classes
             return current;
         }
 
-        public SyntaxToken Match(SyntaxKind kind)
+        public SyntaxToken MatchToken(SyntaxKind kind)
         {
             if (Current.Kind == kind)
                 return NextToken();
@@ -60,21 +60,10 @@ namespace Language.Classes
             return new SyntaxToken(kind, Current.Position, null, null);
         }
 
-        public abstract class SyntaxNode
-        {
-            public abstract SyntaxKind Kind { get; }
-            public abstract IEnumerable<SyntaxNode> GetChildren();
-        }
-
-        public abstract class ExpressionSyntax : SyntaxNode
-        {
-
-        }
-
         public SyntaxTree Parse()
         {
             var expression = ParseExpression();
-            var endOfFile = Match(SyntaxKind.EndOfFile);
+            var endOfFile = MatchToken(SyntaxKind.EndOfFile);
 
             return new SyntaxTree(_diagnostics, expression, endOfFile);
         }
@@ -111,16 +100,24 @@ namespace Language.Classes
 
         public ExpressionSyntax ParsePrimaryExpression()
         {
-            if (Current.Kind == SyntaxKind.OpenParenthesis)
+            switch (Current.Kind)
             {
-                var left = NextToken();
-                var expression = ParseExpression();
-                var right = Match(SyntaxKind.CloseParenthesis);
-                return new ParenthesizedExpressionSyntax(left, expression, right);
-            }
+                case SyntaxKind.OpenParenthesis:
+                    var left = NextToken();
+                    var expression = ParseExpression();
+                    var right = MatchToken(SyntaxKind.CloseParenthesis);
 
-            var numberToken = Match(SyntaxKind.Number);
-            return new LiteralExpressionSyntax(numberToken);
+                    return new ParenthesizedExpressionSyntax(left, expression, right);
+                case SyntaxKind.True:
+                case SyntaxKind.False:
+                    var keywordToken = NextToken();
+                    var value = keywordToken.Kind == SyntaxKind.True;
+
+                    return new LiteralExpressionSyntax(keywordToken, value);
+                default:
+                    var numberToken = MatchToken(SyntaxKind.Number);
+                    return new LiteralExpressionSyntax(numberToken);
+            }
         }
     }
 }

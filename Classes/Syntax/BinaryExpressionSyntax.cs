@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using static Language.Classes.Parser;
 
 namespace Language.Classes.Syntax
 {
@@ -12,11 +11,10 @@ namespace Language.Classes.Syntax
             OperatorToken = operatorToken;
         }
 
+        public override SyntaxKind Kind => SyntaxKind.BinaryExpression;
         public ExpressionSyntax Left { get; }
         public ExpressionSyntax Right { get; }
         public SyntaxToken OperatorToken { get; }
-
-        public override SyntaxKind Kind => SyntaxKind.BinaryExpression;
 
         public override IEnumerable<SyntaxNode> GetChildren()
         {

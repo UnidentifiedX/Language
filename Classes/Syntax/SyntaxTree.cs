@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Language.Classes.Syntax;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Language.Classes.Parser;
 
 namespace Language.Classes
 {

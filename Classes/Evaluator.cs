@@ -1,4 +1,5 @@
-﻿using Language.Classes.Syntax;
+﻿using Language.Classes.Binding;
+using Language.Classes.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,59 +9,71 @@ using static Language.Classes.Parser;
 
 namespace Language.Classes
 {
-    internal class Evaluator
+    internal sealed class Evaluator
     {
-        private readonly ExpressionSyntax _root;
+        private readonly BoundExpression _root;
 
-        public Evaluator(ExpressionSyntax root)
+        public Evaluator(BoundExpression root)
         {
-            this._root = root;
+            _root = root;
         }
 
-        public int Evaluate()
+        public object Evaluate()
         {
             return EvaluateExpression(_root);
         }
 
-        public int EvaluateExpression(ExpressionSyntax node)
+        public object EvaluateExpression(BoundExpression node)
         {
-            if (node is LiteralExpressionSyntax n)
+            if (node is BoundLiteralExpression n)
             {
-                return (int)n.LiteralToken.Value;
+                return n.Value;
             }
 
-            if (node is UnaryExpressionSyntax u)
+            if (node is BoundUnaryExpression u)
             {
                 var operand = EvaluateExpression(u.Operand);
 
-                if (u.OperatorToken.Kind == SyntaxKind.Plus)
-                    return operand;
-                else if (u.OperatorToken.Kind == SyntaxKind.Minus)
-                    return -operand;
-                else
-                    throw new Exception($"Unexpected unary operator {u.OperatorToken.Kind}");
+                switch (u.Op.Kind)
+                {
+                    case BoundUnaryOperatorKind.Identity:
+                        return (int)operand;
+                    case BoundUnaryOperatorKind.Negation:
+                        return -(int)operand;
+                    case BoundUnaryOperatorKind.LogicalNegation:
+                        return !(bool)operand;
+                    default:
+                        throw new Exception($"Unexpected unary operator {u.Op}");
+                }
             }
 
-            if (node is BinaryExpressionSyntax b)
+            if (node is BoundBinaryExpression b)
             {
                 var left = EvaluateExpression(b.Left);
                 var right = EvaluateExpression(b.Right);
 
-                if (b.OperatorToken.Kind == SyntaxKind.Plus)
-                    return left + right;
-                else if (b.OperatorToken.Kind == SyntaxKind.Minus)
-                    return left - right;
-                else if (b.OperatorToken.Kind == SyntaxKind.Star)
-                    return left * right;
-                else if (b.OperatorToken.Kind == SyntaxKind.Slash)
-                    return left / right;
-                    
-                else
-                    throw new Exception($"Unexpected binary operator {b.OperatorToken.Kind}");
+                switch (b.Op.Kind)
+                {
+                    case BoundBinaryOperatorKind.Addition:
+                        return (int)left + (int)right;
+                    case BoundBinaryOperatorKind.Subtraction:
+                        return (int)left - (int)right;
+                    case BoundBinaryOperatorKind.Multiplication:
+                        return (int)left * (int)right;
+                    case BoundBinaryOperatorKind.Division:
+                        return (int)left / (int)right;
+                    case BoundBinaryOperatorKind.LogicalAnd:
+                        return (bool)left && (bool)right;
+                    case BoundBinaryOperatorKind.LogicalOr:
+                        return (bool)left || (bool)right;
+                    case BoundBinaryOperatorKind.Equals:
+                        return Equals(left, right);
+                    case BoundBinaryOperatorKind.NotEquals:
+                        return !Equals(left, right);
+                    default:
+                        throw new Exception($"Unexpected binary operator {b.Op}");
+                }
             }
-
-            if (node is ParenthesizedExpressionSyntax p) 
-                return EvaluateExpression(p.Expression);
 
             throw new Exception($"Undexpected node {node.Kind}");
         }

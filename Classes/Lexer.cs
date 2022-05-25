@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Language.Classes.Parser;
+﻿using System.Collections.Generic;
 
 namespace Language.Classes
 {
@@ -20,15 +15,17 @@ namespace Language.Classes
 
         public IEnumerable<string> Diagnostics => _diagnostics;
 
-        private char Current
-        {
-            get
-            {
-                if (_position >= _text.Length)
-                    return '\0';
+        private char Current => Peek(0);
+        private char LookAhead => Peek(1);
 
-                return _text[_position];
-            }
+        private char Peek(int offset)
+        {
+            var index = _position + offset;
+
+            if (index >= _text.Length)
+                return '\0';
+
+            return _text[index];
         }
 
         private void Next()
@@ -71,6 +68,18 @@ namespace Language.Classes
                 return new SyntaxToken(SyntaxKind.Whitespace, start, text, null);
             }
 
+            if (char.IsLetter(Current))
+            {
+                var start = _position;
+
+                while (char.IsLetter(Current)) Next();
+
+                var length = _position - start;
+                var text = _text.Substring(start, length);
+                var kind = SyntaxFacts.GetKeywordKind(text);
+                return new SyntaxToken(kind, start, text, null);
+            }
+
             switch (Current)
             {
                 case '+':
@@ -85,49 +94,27 @@ namespace Language.Classes
                     return new SyntaxToken(SyntaxKind.OpenParenthesis, _position++, "(", null);
                 case ')':
                     return new SyntaxToken(SyntaxKind.CloseParenthesis, _position++, ")", null);
+                case '&':
+                    if (LookAhead == '&')
+                        return new SyntaxToken(SyntaxKind.AmpersandAmpersand, _position += 2, "&&", null);
+                    break;
+                case '|':
+                    if (LookAhead == '|')
+                        return new SyntaxToken(SyntaxKind.PipePipe, _position += 2, "||", null);
+                    break;
+                case '=':
+                    if (LookAhead == '=')
+                        return new SyntaxToken(SyntaxKind.Equality, _position += 2, "==", null);
+                    break;
+                case '!':
+                    if (LookAhead == '=')
+                        return new SyntaxToken(SyntaxKind.Inequality, _position += 2, "!=", null);
+                    else 
+                        return new SyntaxToken(SyntaxKind.Bang, _position++, "!", null);
             }
 
             _diagnostics.Add($"ERROR: Bad character input: '{Current}'");
             return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.Substring(_position - 1, 1), null);
         }
-    }
-
-    class SyntaxToken : SyntaxNode
-    {
-        public SyntaxToken(SyntaxKind kind, int position, string text, object value)
-        {
-            Kind = kind;
-            Position = position;
-            Text = text;
-            Value = value;
-        }
-
-        public override SyntaxKind Kind { get; }
-        public int Position { get; }
-        public string Text { get; }
-        public object Value { get; }
-
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            return Enumerable.Empty<SyntaxNode>();
-        }
-    }
-
-    enum SyntaxKind
-    {
-        Number,
-        Whitespace,
-        Plus,
-        Minus,
-        Star,
-        Slash,
-        OpenParenthesis,
-        CloseParenthesis,
-        BadToken,
-        EndOfFile,
-        LiteralExpression,
-        BinaryExpression,
-        ParenthesizedExpression,
-        UnaryExpression
     }
 }

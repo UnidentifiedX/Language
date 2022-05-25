@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Language.Classes
 {
     internal static class SyntaxFacts
@@ -14,7 +10,8 @@ namespace Language.Classes
             {
                 case SyntaxKind.Plus:
                 case SyntaxKind.Minus:
-                    return 3;
+                case SyntaxKind.Bang:
+                    return 6;
                 default:
                     return 0;
             }
@@ -26,15 +23,34 @@ namespace Language.Classes
             {
                 case SyntaxKind.Star:
                 case SyntaxKind.Slash:
-                    return 2;
+                    return 5;
                 case SyntaxKind.Plus:
                 case SyntaxKind.Minus:
+                    return 4;
+                case SyntaxKind.Equality:
+                case SyntaxKind.Inequality:
+                    return 3;
+                case SyntaxKind.AmpersandAmpersand:
+                    return 2;
+                case SyntaxKind.PipePipe:
                     return 1;
                 default:
                     return 0;
             }
         }
-        
-        
+
+        internal static SyntaxKind GetKeywordKind(string text)
+        {
+            switch (text)
+            {
+                case "true":
+                    return SyntaxKind.True;
+                case "false":
+                    return SyntaxKind.False;
+                default:
+                    return SyntaxKind.IdentifierToken;
+
+            }
+        }
     }
 }
