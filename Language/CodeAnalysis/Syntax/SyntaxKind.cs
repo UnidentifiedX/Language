@@ -1,4 +1,4 @@
-﻿namespace Language.Classes
+﻿namespace Language.CodeAnalysis
 {
     enum SyntaxKind
     {

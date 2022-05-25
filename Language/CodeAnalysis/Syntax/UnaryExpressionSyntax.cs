@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using static Language.Classes.Parser;
+using static Language.CodeAnalysis.Parser;
 
-namespace Language.Classes.Syntax
+namespace Language.CodeAnalysis.Syntax
 {
     sealed class UnaryExpressionSyntax : ExpressionSyntax
     {

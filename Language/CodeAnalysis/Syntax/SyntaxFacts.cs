@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace Language.Classes
+namespace Language.CodeAnalysis
 {
     internal static class SyntaxFacts
     {

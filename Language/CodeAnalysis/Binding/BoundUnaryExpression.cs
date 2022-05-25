@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Language.Classes.Binding
+namespace Language.CodeAnalysis.Binding
 {
     internal sealed class BoundUnaryExpression : BoundExpression
     {

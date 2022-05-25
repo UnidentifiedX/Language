@@ -1,4 +1,4 @@
-﻿namespace Language.Classes.Binding
+﻿namespace Language.CodeAnalysis.Binding
 {
     internal enum BoundBinaryOperatorKind
     {

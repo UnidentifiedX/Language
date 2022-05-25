@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Language.Classes.Parser;
+using static Language.CodeAnalysis.Parser;
 
-namespace Language.Classes.Syntax
+namespace Language.CodeAnalysis.Syntax
 {
     sealed class LiteralExpressionSyntax : ExpressionSyntax
     {

@@ -1,13 +1,7 @@
-﻿using Language.Classes.Binding;
-using Language.Classes.Syntax;
+﻿using Language.CodeAnalysis.Binding;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Language.Classes.Parser;
 
-namespace Language.Classes
+namespace Language.CodeAnalysis
 {
     internal sealed class Evaluator
     {

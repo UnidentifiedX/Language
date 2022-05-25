@@ -1,14 +1,14 @@
-﻿using Language.Classes.Syntax;
+﻿using Language.CodeAnalysis.Syntax;
 using System;
 using System.Collections.Generic;
 
-namespace Language.Classes.Binding
+namespace Language.CodeAnalysis.Binding
 {
     internal sealed class Binder
     {
-        public List<string> _diagnostics = new();
+        public DiagnosticBag _diagnostics = new();
 
-        public IEnumerable<string> Diagnostics => _diagnostics;
+        public DiagnosticBag Diagnostics => _diagnostics;
 
         public BoundExpression BindExpression(ExpressionSyntax syntax)
         {
@@ -40,7 +40,7 @@ namespace Language.Classes.Binding
 
             if (boundOperator == null)
             {
-                _diagnostics.Add($"Unary operator '{syntax.OperatorToken.Text}' is not defined for type {boundOperand.Type}");
+                _diagnostics.ReportUndefinedUnaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundOperand.Type);
                 return boundOperand;
             }
 
@@ -55,7 +55,7 @@ namespace Language.Classes.Binding
             
             if(boundOperator == null)
             {
-                _diagnostics.Add($"Binary operator '{syntax.OperatorToken.Text}' is not defined for types {boundLeft.Type} and {boundRight.Type}");
+                _diagnostics.ReportUndefinedBinaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundLeft.Type, boundRight.Type);
                 return boundLeft;
             }
 

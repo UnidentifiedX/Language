@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Language.Classes.Syntax
+namespace Language.CodeAnalysis.Syntax
 {
     sealed class BinaryExpressionSyntax : ExpressionSyntax
     {
