@@ -18,11 +18,14 @@
         UnaryExpression,
         True,
         False,
-        IdentifierToken,
+        Identifier,
         Bang,
         And,
         Or,
         Equality,
-        Inequality
+        Inequality,
+        NameExpression,
+        AssignmentExpression,
+        Assign
     }
 }

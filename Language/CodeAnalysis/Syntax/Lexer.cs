@@ -85,14 +85,7 @@ namespace Language.CodeAnalysis
                         _position += 3;
                         return new SyntaxToken(SyntaxKind.And, start, "and", null);
                     }
-                    break;
-                case 'o':
-                    if (LookAhead(1, 1) == "r")
-                    {
-                        _position += 2;
-                        return new SyntaxToken(SyntaxKind.Or, start, "or", null);
-                    }
-                    break;
+                    else goto default;
                 case 'i':
                     if (LookAhead(1, 10) == "s equal to")
                     {
@@ -104,7 +97,21 @@ namespace Language.CodeAnalysis
                         _position += 15;
                         return new SyntaxToken(SyntaxKind.Inequality, start, "is not equal to", null);
                     }
-                    break;
+                    else goto default;
+                case 'o':
+                    if (LookAhead(1, 1) == "r")
+                    {
+                        _position += 2;
+                        return new SyntaxToken(SyntaxKind.Or, start, "or", null);
+                    }
+                    else goto default;
+                case 'r':
+                    if(LookAhead(1, 9) == "epresents")
+                    {
+                        _position += 10;
+                        return new SyntaxToken(SyntaxKind.Assign, start, "represents", null);
+                    }
+                    else goto default;
                 case '!':
                     _position++;
                     return new SyntaxToken(SyntaxKind.Bang, start, "!", null);

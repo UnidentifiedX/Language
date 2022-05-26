@@ -26,8 +26,8 @@ namespace Language.CodeAnalysis.Binding
         {
             new BoundUnaryOperator(SyntaxKind.Bang, BoundUnaryOperatorKind.LogicalNegation, typeof(bool)),
 
-            new BoundUnaryOperator(SyntaxKind.Plus, BoundUnaryOperatorKind.Identity, typeof(bool)),
-            new BoundUnaryOperator(SyntaxKind.Minus, BoundUnaryOperatorKind.Negation, typeof(bool)),
+            new BoundUnaryOperator(SyntaxKind.Plus, BoundUnaryOperatorKind.Identity, typeof(int)),
+            new BoundUnaryOperator(SyntaxKind.Minus, BoundUnaryOperatorKind.Negation, typeof(int)),
         };
 
         public static BoundUnaryOperator Bind(SyntaxKind syntaxKind, Type operandType)

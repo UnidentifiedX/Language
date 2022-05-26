@@ -48,7 +48,7 @@ namespace Language.CodeAnalysis
                 case "false":
                     return SyntaxKind.False;
                 default:
-                    return SyntaxKind.IdentifierToken;
+                    return SyntaxKind.Identifier;
 
             }
         }

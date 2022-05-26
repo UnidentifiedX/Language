@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CodeAnalysis\" />
+    <Folder Include="CodeAnalysis\Binding\" />
+    <Folder Include="CodeAnalysis\Syntax\" />
   </ItemGroup>
 
 </Project>
