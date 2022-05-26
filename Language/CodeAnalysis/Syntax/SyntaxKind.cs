@@ -1,0 +1,31 @@
+﻿namespace Language.CodeAnalysis
+{
+    enum SyntaxKind
+    {
+        Number,
+        Whitespace,
+        Plus,
+        Minus,
+        Star,
+        Slash,
+        OpenParenthesis,
+        CloseParenthesis,
+        BadToken,
+        EndOfFile,
+        LiteralExpression,
+        BinaryExpression,
+        ParenthesizedExpression,
+        UnaryExpression,
+        True,
+        False,
+        Identifier,
+        Bang,
+        And,
+        Or,
+        Equality,
+        Inequality,
+        NameExpression,
+        AssignmentExpression,
+        Assign
+    }
+}
