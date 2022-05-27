@@ -35,6 +35,7 @@ namespace Language.CodeAnalysis.Binding
             new BoundBinaryOperator(SyntaxKind.Minus, BoundBinaryOperatorKind.Subtraction, typeof(int)),
             new BoundBinaryOperator(SyntaxKind.Star, BoundBinaryOperatorKind.Multiplication, typeof(int)),
             new BoundBinaryOperator(SyntaxKind.Slash, BoundBinaryOperatorKind.Division, typeof(int)),
+            new BoundBinaryOperator(SyntaxKind.Percentage, BoundBinaryOperatorKind.Modulo, typeof(int)),
             new BoundBinaryOperator(SyntaxKind.Equality, BoundBinaryOperatorKind.Equals, typeof(int), typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.Inequality, BoundBinaryOperatorKind.NotEquals, typeof(int), typeof(bool)),
 

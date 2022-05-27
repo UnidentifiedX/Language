@@ -67,14 +67,14 @@ namespace Language.CodeAnalysis
 
             switch (Current)
             {
-                case '+':
-                    return new SyntaxToken(SyntaxKind.Plus, _position++, "+", null);
+                //case '+':
+                //    return new SyntaxToken(SyntaxKind.Plus, _position++, "+", null);
                 case '-':
                     return new SyntaxToken(SyntaxKind.Minus, _position++, "-", null);
-                case '*':
-                    return new SyntaxToken(SyntaxKind.Star, _position++, "*", null);
-                case '/':
-                    return new SyntaxToken(SyntaxKind.Slash, _position++, "/", null);
+                //case '*':
+                //    return new SyntaxToken(SyntaxKind.Star, _position++, "*", null);
+                //case '/':
+                //    return new SyntaxToken(SyntaxKind.Slash, _position++, "/", null);
                 case '(':
                     return new SyntaxToken(SyntaxKind.OpenParenthesis, _position++, "(", null);
                 case ')':
@@ -84,6 +84,13 @@ namespace Language.CodeAnalysis
                     {
                         _position += 3;
                         return new SyntaxToken(SyntaxKind.And, start, "and", null);
+                    }
+                    else goto default;
+                case 'd':
+                    if(LookAhead(1, 9) == "ivided by")
+                    {
+                        _position += 10;
+                        return new SyntaxToken(SyntaxKind.Slash, start, "divided by", null);
                     }
                     else goto default;
                 case 'i':
@@ -98,11 +105,35 @@ namespace Language.CodeAnalysis
                         return new SyntaxToken(SyntaxKind.Inequality, start, "is not equal to", null);
                     }
                     else goto default;
+                case 'm':
+                    if(LookAhead(1, 4) == "inus")
+                    {
+                        _position += 5;
+                        return new SyntaxToken(SyntaxKind.Minus, start, "minus", null);
+                    } 
+                    else if(LookAhead(1, 12) == "ultiplied by")
+                    {
+                        _position += 13;
+                        return new SyntaxToken(SyntaxKind.Star, start, "multiplied by", null);
+                    }
+                    else if(LookAhead(1, 5) == "odulo")
+                    {
+                        _position += 6;
+                        return new SyntaxToken(SyntaxKind.Percentage, start, "modulo", null);
+                    }
+                    else goto default;
                 case 'o':
                     if (LookAhead(1, 1) == "r")
                     {
                         _position += 2;
                         return new SyntaxToken(SyntaxKind.Or, start, "or", null);
+                    }
+                    else goto default;
+                case 'p':
+                    if (LookAhead(1, 3) == "lus")
+                    {
+                        _position += 4;
+                        return new SyntaxToken(SyntaxKind.Plus, start, "plus", null);
                     }
                     else goto default;
                 case 'r':
