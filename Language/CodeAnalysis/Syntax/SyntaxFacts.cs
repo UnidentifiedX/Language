@@ -21,6 +21,7 @@ namespace Language.CodeAnalysis
         {
             switch (kind)
             {
+                case SyntaxKind.Percentage:
                 case SyntaxKind.Star:
                 case SyntaxKind.Slash:
                     return 5;

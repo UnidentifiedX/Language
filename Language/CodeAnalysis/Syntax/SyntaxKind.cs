@@ -26,6 +26,7 @@
         Inequality,
         NameExpression,
         AssignmentExpression,
-        Assign
+        Assign,
+        Percentage
     }
 }

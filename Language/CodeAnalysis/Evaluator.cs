@@ -72,6 +72,10 @@ namespace Language.CodeAnalysis
                         return (int)left * (int)right;
                     case BoundBinaryOperatorKind.Division:
                         return (int)left / (int)right;
+                    case BoundBinaryOperatorKind.Modulo:
+                        int _n = (int)left,
+                            _m = (int)right;
+                        return ((_n % _m) + _m) % _m;
                     case BoundBinaryOperatorKind.LogicalAnd:
                         return (bool)left && (bool)right;
                     case BoundBinaryOperatorKind.LogicalOr:
