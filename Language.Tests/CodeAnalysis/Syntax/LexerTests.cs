@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Language.Tests.CodeAnalysis.Syntax
 {
-    public class LexerTest
+    public class LexerTests
     {
         [Theory]
         [MemberData(nameof(GetTokensData))]
@@ -78,10 +78,11 @@ namespace Language.Tests.CodeAnalysis.Syntax
             {
                 (SyntaxKind.PlusToken, "plus"),
                 (SyntaxKind.MinusToken, "minus"),
-                (SyntaxKind.StarToken, "multiplied by"),
-                (SyntaxKind.SlashToken, "divided by"),
-                (SyntaxKind.BangToken, "not"),
-                (SyntaxKind.EqualsToken, "represents"),
+                (SyntaxKind.MultiplicationToken, "multiplied by"),
+                (SyntaxKind.DivisionToken, "divided by"),
+                (SyntaxKind.ModuloToken, "modulo"),
+                (SyntaxKind.NotToken, "not"),
+                (SyntaxKind.RepresentsToken, "represents"),
                 (SyntaxKind.AndToken, "and"),
                 (SyntaxKind.OrToken, "or"),
                 (SyntaxKind.EqualityToken, "is equal to"),
@@ -133,16 +134,16 @@ namespace Language.Tests.CodeAnalysis.Syntax
             if (t1Kind == SyntaxKind.NumberToken && t2Kind == SyntaxKind.NumberToken)
                 return true;
 
-            if (t1Kind == SyntaxKind.BangToken && t2Kind == SyntaxKind.EqualsToken)
+            if (t1Kind == SyntaxKind.NotToken && t2Kind == SyntaxKind.RepresentsToken)
                 return true;
 
-            if (t1Kind == SyntaxKind.BangToken && t2Kind == SyntaxKind.EqualityToken)
+            if (t1Kind == SyntaxKind.NotToken && t2Kind == SyntaxKind.EqualityToken)
                 return true;
 
-            if (t1Kind == SyntaxKind.EqualsToken && t2Kind == SyntaxKind.EqualsToken)
+            if (t1Kind == SyntaxKind.RepresentsToken && t2Kind == SyntaxKind.RepresentsToken)
                 return true;
 
-            if (t1Kind == SyntaxKind.EqualsToken && t2Kind == SyntaxKind.EqualityToken)
+            if (t1Kind == SyntaxKind.RepresentsToken && t2Kind == SyntaxKind.EqualityToken)
                 return true;
 
             return false;

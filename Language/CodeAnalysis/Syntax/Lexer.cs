@@ -90,7 +90,7 @@ namespace Language.CodeAnalysis
                     if(LookAhead(1, 9) == "ivided by")
                     {
                         _position += 10;
-                        return new SyntaxToken(SyntaxKind.SlashToken, start, "divided by", null);
+                        return new SyntaxToken(SyntaxKind.DivisionToken, start, "divided by", null);
                     }
                     else goto default;
                 case 'i':
@@ -114,19 +114,19 @@ namespace Language.CodeAnalysis
                     else if(LookAhead(1, 12) == "ultiplied by")
                     {
                         _position += 13;
-                        return new SyntaxToken(SyntaxKind.StarToken, start, "multiplied by", null);
+                        return new SyntaxToken(SyntaxKind.MultiplicationToken, start, "multiplied by", null);
                     }
                     else if(LookAhead(1, 5) == "odulo")
                     {
                         _position += 6;
-                        return new SyntaxToken(SyntaxKind.PercentageToken, start, "modulo", null);
+                        return new SyntaxToken(SyntaxKind.ModuloToken, start, "modulo", null);
                     }
                     else goto default;
                 case 'n':
                     if (LookAhead(1, 2) == "ot")
                     {
                         _position += 3;
-                        return new SyntaxToken(SyntaxKind.BangToken, start, "not", null);
+                        return new SyntaxToken(SyntaxKind.NotToken, start, "not", null);
                     }
                     else goto default;
                 case 'o':
@@ -147,7 +147,7 @@ namespace Language.CodeAnalysis
                     if(LookAhead(1, 9) == "epresents")
                     {
                         _position += 10;
-                        return new SyntaxToken(SyntaxKind.EqualsToken, start, "represents", null);
+                        return new SyntaxToken(SyntaxKind.RepresentsToken, start, "represents", null);
                     }
                     else goto default;
                 default:

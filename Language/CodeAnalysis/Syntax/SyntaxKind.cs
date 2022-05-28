@@ -7,12 +7,21 @@
         WhitespaceToken,
         PlusToken,
         MinusToken,
-        StarToken,
-        SlashToken,
+        MultiplicationToken,
+        DivisionToken,
         OpenParenthesisToken,
         CloseParenthesisToken,
         BadToken,
         EndOfFileToken,
+        IdentifierToken,
+        NotToken,
+        AndToken,
+        OrToken,
+        EqualityToken,
+        InequalityToken,
+        NameExpression,
+        RepresentsToken,
+        ModuloToken,
 
         // Expressions
         LiteralExpression,
@@ -21,15 +30,6 @@
         UnaryExpression,
         TrueKeyword,
         FalseKeyword,
-        IdentifierToken,
-        BangToken,
-        AndToken,
-        OrToken,
-        EqualityToken,
-        InequalityToken,
-        NameExpression,
-        AssignmentExpression,
-        EqualsToken,
-        PercentageToken
+        AssignmentExpression
     }
 }

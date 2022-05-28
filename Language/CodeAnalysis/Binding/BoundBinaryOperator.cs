@@ -33,9 +33,9 @@ namespace Language.CodeAnalysis.Binding
         {
             new BoundBinaryOperator(SyntaxKind.PlusToken, BoundBinaryOperatorKind.Addition, typeof(int)),
             new BoundBinaryOperator(SyntaxKind.MinusToken, BoundBinaryOperatorKind.Subtraction, typeof(int)),
-            new BoundBinaryOperator(SyntaxKind.StarToken, BoundBinaryOperatorKind.Multiplication, typeof(int)),
-            new BoundBinaryOperator(SyntaxKind.SlashToken, BoundBinaryOperatorKind.Division, typeof(int)),
-            new BoundBinaryOperator(SyntaxKind.PercentageToken, BoundBinaryOperatorKind.Modulo, typeof(int)),
+            new BoundBinaryOperator(SyntaxKind.MultiplicationToken, BoundBinaryOperatorKind.Multiplication, typeof(int)),
+            new BoundBinaryOperator(SyntaxKind.DivisionToken, BoundBinaryOperatorKind.Division, typeof(int)),
+            new BoundBinaryOperator(SyntaxKind.ModuloToken, BoundBinaryOperatorKind.Modulo, typeof(int)),
             new BoundBinaryOperator(SyntaxKind.EqualityToken, BoundBinaryOperatorKind.Equals, typeof(int), typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.InequalityToken, BoundBinaryOperatorKind.NotEquals, typeof(int), typeof(bool)),
 
