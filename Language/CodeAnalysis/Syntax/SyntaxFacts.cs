@@ -8,9 +8,9 @@ namespace Language.CodeAnalysis
         {
             switch (kind)
             {
-                case SyntaxKind.Plus:
-                case SyntaxKind.Minus:
-                case SyntaxKind.Bang:
+                case SyntaxKind.PlusToken:
+                case SyntaxKind.MinusToken:
+                case SyntaxKind.BangToken:
                     return 6;
                 default:
                     return 0;
@@ -21,19 +21,19 @@ namespace Language.CodeAnalysis
         {
             switch (kind)
             {
-                case SyntaxKind.Percentage:
-                case SyntaxKind.Star:
-                case SyntaxKind.Slash:
+                case SyntaxKind.PercentageToken:
+                case SyntaxKind.StarToken:
+                case SyntaxKind.SlashToken:
                     return 5;
-                case SyntaxKind.Plus:
-                case SyntaxKind.Minus:
+                case SyntaxKind.PlusToken:
+                case SyntaxKind.MinusToken:
                     return 4;
-                case SyntaxKind.Equality:
-                case SyntaxKind.Inequality:
+                case SyntaxKind.EqualityToken:
+                case SyntaxKind.InequalityToken:
                     return 3;
-                case SyntaxKind.And:
+                case SyntaxKind.AndToken:
                     return 2;
-                case SyntaxKind.Or:
+                case SyntaxKind.OrToken:
                     return 1;
                 default:
                     return 0;
@@ -45,11 +45,11 @@ namespace Language.CodeAnalysis
             switch (text)
             {
                 case "true":
-                    return SyntaxKind.True;
+                    return SyntaxKind.TrueKeyword;
                 case "false":
-                    return SyntaxKind.False;
+                    return SyntaxKind.FalseKeyword;
                 default:
-                    return SyntaxKind.Identifier;
+                    return SyntaxKind.IdentifierToken;
 
             }
         }

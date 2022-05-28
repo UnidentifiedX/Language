@@ -2,31 +2,34 @@
 {
     public enum SyntaxKind
     {
-        Number,
-        Whitespace,
-        Plus,
-        Minus,
-        Star,
-        Slash,
-        OpenParenthesis,
-        CloseParenthesis,
+        // Tokens
+        NumberToken,
+        WhitespaceToken,
+        PlusToken,
+        MinusToken,
+        StarToken,
+        SlashToken,
+        OpenParenthesisToken,
+        CloseParenthesisToken,
         BadToken,
-        EndOfFile,
+        EndOfFileToken,
+
+        // Expressions
         LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression,
         UnaryExpression,
-        True,
-        False,
-        Identifier,
-        Bang,
-        And,
-        Or,
-        Equality,
-        Inequality,
+        TrueKeyword,
+        FalseKeyword,
+        IdentifierToken,
+        BangToken,
+        AndToken,
+        OrToken,
+        EqualityToken,
+        InequalityToken,
         NameExpression,
         AssignmentExpression,
-        Assign,
-        Percentage
+        EqualsToken,
+        PercentageToken
     }
 }
