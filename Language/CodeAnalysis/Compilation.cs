@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Language.CodeAnalysis
 {
-    sealed class Compilation
+    public sealed class Compilation
     {
         public Compilation(SyntaxTree syntax)
         {

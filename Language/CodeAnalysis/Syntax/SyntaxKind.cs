@@ -1,6 +1,6 @@
 ﻿namespace Language.CodeAnalysis
 {
-    enum SyntaxKind
+    public enum SyntaxKind
     {
         Number,
         Whitespace,
