@@ -67,8 +67,8 @@ namespace Language.CodeAnalysis
 
             switch (Current)
             {
-                //case '+':
-                //    return new SyntaxToken(SyntaxKind.Plus, _position++, "+", null);
+                case '+':
+                    return new SyntaxToken(SyntaxKind.PlusToken, _position++, "+", null);
                 case '-':
                     return new SyntaxToken(SyntaxKind.MinusToken, _position++, "-", null);
                 //case '*':
