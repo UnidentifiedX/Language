@@ -1,32 +1,35 @@
 ﻿namespace Language.CodeAnalysis
 {
-    enum SyntaxKind
+    public enum SyntaxKind
     {
-        Number,
-        Whitespace,
-        Plus,
-        Minus,
-        Star,
-        Slash,
-        OpenParenthesis,
-        CloseParenthesis,
+        // Tokens
+        NumberToken,
+        WhitespaceToken,
+        PlusToken,
+        MinusToken,
+        MultiplicationToken,
+        DivisionToken,
+        OpenParenthesisToken,
+        CloseParenthesisToken,
         BadToken,
-        EndOfFile,
+        EndOfFileToken,
+        IdentifierToken,
+        NotToken,
+        AndToken,
+        OrToken,
+        EqualityToken,
+        InequalityToken,
+        NameExpression,
+        RepresentsToken,
+        ModuloToken,
+
+        // Expressions
         LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression,
         UnaryExpression,
-        True,
-        False,
-        Identifier,
-        Bang,
-        And,
-        Or,
-        Equality,
-        Inequality,
-        NameExpression,
-        AssignmentExpression,
-        Assign,
-        Percentage
+        TrueKeyword,
+        FalseKeyword,
+        AssignmentExpression
     }
 }

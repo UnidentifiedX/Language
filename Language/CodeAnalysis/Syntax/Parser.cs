@@ -22,11 +22,11 @@ namespace Language.CodeAnalysis
             {
                 token = lexer.Lex();
 
-                if (token.Kind != SyntaxKind.Whitespace && token.Kind != SyntaxKind.BadToken)
+                if (token.Kind != SyntaxKind.WhitespaceToken && token.Kind != SyntaxKind.BadToken)
                 {
                     tokens.Add(token);
                 }
-            } while (token.Kind != SyntaxKind.EndOfFile);
+            } while (token.Kind != SyntaxKind.EndOfFileToken);
 
             _tokens = tokens.ToArray();
             _diagnostics.AddRange(lexer.Diagnostics);
@@ -63,7 +63,7 @@ namespace Language.CodeAnalysis
         public SyntaxTree Parse()
         {
             var expression = ParseExpression();
-            var endOfFile = MatchToken(SyntaxKind.EndOfFile);
+            var endOfFile = MatchToken(SyntaxKind.EndOfFileToken);
 
             return new SyntaxTree(_diagnostics, expression, endOfFile);
         }
@@ -75,7 +75,7 @@ namespace Language.CodeAnalysis
 
         private ExpressionSyntax ParseAssignmentExpression()
         {
-            if (Peek(0).Kind == SyntaxKind.Identifier && Peek(1).Kind == SyntaxKind.Assign)
+            if (Peek(0).Kind == SyntaxKind.IdentifierToken && Peek(1).Kind == SyntaxKind.RepresentsToken)
             {
                 var identifierToken = NextToken();
                 var operatorToken = NextToken();
@@ -121,23 +121,23 @@ namespace Language.CodeAnalysis
         {
             switch (Current.Kind)
             {
-                case SyntaxKind.OpenParenthesis:
+                case SyntaxKind.OpenParenthesisToken:
                     var left = NextToken();
                     var expression = ParseExpression();
-                    var right = MatchToken(SyntaxKind.CloseParenthesis);
+                    var right = MatchToken(SyntaxKind.CloseParenthesisToken);
 
                     return new ParenthesizedExpressionSyntax(left, expression, right);
-                case SyntaxKind.True:
-                case SyntaxKind.False:
+                case SyntaxKind.TrueKeyword:
+                case SyntaxKind.FalseKeyword:
                     var keywordToken = NextToken();
-                    var value = keywordToken.Kind == SyntaxKind.True;
+                    var value = keywordToken.Kind == SyntaxKind.TrueKeyword;
 
                     return new LiteralExpressionSyntax(keywordToken, value);
-                case SyntaxKind.Identifier:
+                case SyntaxKind.IdentifierToken:
                     var identifierToken = NextToken();
                     return new NameExpressionSyntax(identifierToken);
                 default:
-                    var numberToken = MatchToken(SyntaxKind.Number);
+                    var numberToken = MatchToken(SyntaxKind.NumberToken);
                     return new LiteralExpressionSyntax(numberToken);
             }
         }

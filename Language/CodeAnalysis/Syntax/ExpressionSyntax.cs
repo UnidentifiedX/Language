@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Language.CodeAnalysis.Syntax
 {
-    abstract class ExpressionSyntax : SyntaxNode
+    public abstract class ExpressionSyntax : SyntaxNode
     {
 
     }

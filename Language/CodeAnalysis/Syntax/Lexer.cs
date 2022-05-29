@@ -46,7 +46,7 @@ namespace Language.CodeAnalysis
         public SyntaxToken Lex()
         { 
             if(_position >= _text.Length)
-                return new SyntaxToken(SyntaxKind.EndOfFile, _position, "\0", null);
+                return new SyntaxToken(SyntaxKind.EndOfFileToken, _position, "\0", null);
 
             var start = _position;
 
@@ -62,90 +62,94 @@ namespace Language.CodeAnalysis
                     _diagnostics.ReportInvalidNumber(new TextSpan(start, length), _text, typeof(int));
                 }
 
-                return new SyntaxToken(SyntaxKind.Number, start, text, value);
+                return new SyntaxToken(SyntaxKind.NumberToken, start, text, value);
             }
 
             switch (Current)
             {
-                //case '+':
-                //    return new SyntaxToken(SyntaxKind.Plus, _position++, "+", null);
+                case '+':
+                    return new SyntaxToken(SyntaxKind.PlusToken, _position++, "+", null);
                 case '-':
-                    return new SyntaxToken(SyntaxKind.Minus, _position++, "-", null);
+                    return new SyntaxToken(SyntaxKind.MinusToken, _position++, "-", null);
                 //case '*':
                 //    return new SyntaxToken(SyntaxKind.Star, _position++, "*", null);
                 //case '/':
                 //    return new SyntaxToken(SyntaxKind.Slash, _position++, "/", null);
                 case '(':
-                    return new SyntaxToken(SyntaxKind.OpenParenthesis, _position++, "(", null);
+                    return new SyntaxToken(SyntaxKind.OpenParenthesisToken, _position++, "(", null);
                 case ')':
-                    return new SyntaxToken(SyntaxKind.CloseParenthesis, _position++, ")", null);
+                    return new SyntaxToken(SyntaxKind.CloseParenthesisToken, _position++, ")", null);
                 case 'a':
                     if (LookAhead(1, 2) == "nd")
                     {
                         _position += 3;
-                        return new SyntaxToken(SyntaxKind.And, start, "and", null);
+                        return new SyntaxToken(SyntaxKind.AndToken, start, "and", null);
                     }
                     else goto default;
                 case 'd':
                     if(LookAhead(1, 9) == "ivided by")
                     {
                         _position += 10;
-                        return new SyntaxToken(SyntaxKind.Slash, start, "divided by", null);
+                        return new SyntaxToken(SyntaxKind.DivisionToken, start, "divided by", null);
                     }
                     else goto default;
                 case 'i':
                     if (LookAhead(1, 10) == "s equal to")
                     {
                         _position += 11;
-                        return new SyntaxToken(SyntaxKind.Equality, start, "is equal to", null);
+                        return new SyntaxToken(SyntaxKind.EqualityToken, start, "is equal to", null);
                     }
                     else if (LookAhead(1, 14) == "s not equal to")
                     {
                         _position += 15;
-                        return new SyntaxToken(SyntaxKind.Inequality, start, "is not equal to", null);
+                        return new SyntaxToken(SyntaxKind.InequalityToken, start, "is not equal to", null);
                     }
                     else goto default;
                 case 'm':
                     if(LookAhead(1, 4) == "inus")
                     {
                         _position += 5;
-                        return new SyntaxToken(SyntaxKind.Minus, start, "minus", null);
+                        return new SyntaxToken(SyntaxKind.MinusToken, start, "minus", null);
                     } 
                     else if(LookAhead(1, 12) == "ultiplied by")
                     {
                         _position += 13;
-                        return new SyntaxToken(SyntaxKind.Star, start, "multiplied by", null);
+                        return new SyntaxToken(SyntaxKind.MultiplicationToken, start, "multiplied by", null);
                     }
                     else if(LookAhead(1, 5) == "odulo")
                     {
                         _position += 6;
-                        return new SyntaxToken(SyntaxKind.Percentage, start, "modulo", null);
+                        return new SyntaxToken(SyntaxKind.ModuloToken, start, "modulo", null);
+                    }
+                    else goto default;
+                case 'n':
+                    if (LookAhead(1, 2) == "ot")
+                    {
+                        _position += 3;
+                        return new SyntaxToken(SyntaxKind.NotToken, start, "not", null);
                     }
                     else goto default;
                 case 'o':
                     if (LookAhead(1, 1) == "r")
                     {
                         _position += 2;
-                        return new SyntaxToken(SyntaxKind.Or, start, "or", null);
+                        return new SyntaxToken(SyntaxKind.OrToken, start, "or", null);
                     }
                     else goto default;
                 case 'p':
                     if (LookAhead(1, 3) == "lus")
                     {
                         _position += 4;
-                        return new SyntaxToken(SyntaxKind.Plus, start, "plus", null);
+                        return new SyntaxToken(SyntaxKind.PlusToken, start, "plus", null);
                     }
                     else goto default;
                 case 'r':
                     if(LookAhead(1, 9) == "epresents")
                     {
                         _position += 10;
-                        return new SyntaxToken(SyntaxKind.Assign, start, "represents", null);
+                        return new SyntaxToken(SyntaxKind.RepresentsToken, start, "represents", null);
                     }
                     else goto default;
-                case '!':
-                    _position++;
-                    return new SyntaxToken(SyntaxKind.Bang, start, "!", null);
                 default:
                     if (char.IsLetter(Current))
                     {
@@ -165,7 +169,7 @@ namespace Language.CodeAnalysis
                         var length = _position - start;
                         var text = _text.Substring(start, length);
 
-                        return new SyntaxToken(SyntaxKind.Whitespace, start, text, null);
+                        return new SyntaxToken(SyntaxKind.WhitespaceToken, start, text, null);
                     }
 
                     break;

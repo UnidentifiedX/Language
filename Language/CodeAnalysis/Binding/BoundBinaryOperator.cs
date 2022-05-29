@@ -31,18 +31,18 @@ namespace Language.CodeAnalysis.Binding
 
         private static BoundBinaryOperator[] _operators =
         {
-            new BoundBinaryOperator(SyntaxKind.Plus, BoundBinaryOperatorKind.Addition, typeof(int)),
-            new BoundBinaryOperator(SyntaxKind.Minus, BoundBinaryOperatorKind.Subtraction, typeof(int)),
-            new BoundBinaryOperator(SyntaxKind.Star, BoundBinaryOperatorKind.Multiplication, typeof(int)),
-            new BoundBinaryOperator(SyntaxKind.Slash, BoundBinaryOperatorKind.Division, typeof(int)),
-            new BoundBinaryOperator(SyntaxKind.Percentage, BoundBinaryOperatorKind.Modulo, typeof(int)),
-            new BoundBinaryOperator(SyntaxKind.Equality, BoundBinaryOperatorKind.Equals, typeof(int), typeof(bool)),
-            new BoundBinaryOperator(SyntaxKind.Inequality, BoundBinaryOperatorKind.NotEquals, typeof(int), typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.PlusToken, BoundBinaryOperatorKind.Addition, typeof(int)),
+            new BoundBinaryOperator(SyntaxKind.MinusToken, BoundBinaryOperatorKind.Subtraction, typeof(int)),
+            new BoundBinaryOperator(SyntaxKind.MultiplicationToken, BoundBinaryOperatorKind.Multiplication, typeof(int)),
+            new BoundBinaryOperator(SyntaxKind.DivisionToken, BoundBinaryOperatorKind.Division, typeof(int)),
+            new BoundBinaryOperator(SyntaxKind.ModuloToken, BoundBinaryOperatorKind.Modulo, typeof(int)),
+            new BoundBinaryOperator(SyntaxKind.EqualityToken, BoundBinaryOperatorKind.Equals, typeof(int), typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.InequalityToken, BoundBinaryOperatorKind.NotEquals, typeof(int), typeof(bool)),
 
-            new BoundBinaryOperator(SyntaxKind.And, BoundBinaryOperatorKind.LogicalAnd, typeof(bool)),
-            new BoundBinaryOperator(SyntaxKind.Or, BoundBinaryOperatorKind.LogicalOr, typeof(bool)),
-            new BoundBinaryOperator(SyntaxKind.Equality, BoundBinaryOperatorKind.Equals, typeof(bool)),
-            new BoundBinaryOperator(SyntaxKind.Inequality, BoundBinaryOperatorKind.NotEquals, typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.AndToken, BoundBinaryOperatorKind.LogicalAnd, typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.OrToken, BoundBinaryOperatorKind.LogicalOr, typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.EqualityToken, BoundBinaryOperatorKind.Equals, typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.InequalityToken, BoundBinaryOperatorKind.NotEquals, typeof(bool)),
         };
 
         public static BoundBinaryOperator Bind(SyntaxKind syntaxKind, Type leftType, Type rightType)
