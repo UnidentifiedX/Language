@@ -19,7 +19,7 @@ namespace Language.Tests.CodeAnalysis.Syntax
 
             Assert.Equal(kind, token.Kind);
             Assert.Equal(text, token.Text);
-        }
+        }        
 
         public static IEnumerable<object[]> GetSyntaxKindData()
         {
