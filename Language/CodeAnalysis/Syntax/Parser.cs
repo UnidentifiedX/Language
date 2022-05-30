@@ -1,4 +1,5 @@
 ﻿using Language.CodeAnalysis.Syntax;
+using Language.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -12,10 +13,11 @@ namespace Language.CodeAnalysis
     {
         private readonly ImmutableArray<SyntaxToken> _tokens;
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
+        private readonly SourceText _text;
         private int _position;
         
 
-        public Parser(string text)
+        public Parser(SourceText text)
         {
             var tokens = new List<SyntaxToken>();
             var lexer = new Lexer(text);
@@ -32,6 +34,7 @@ namespace Language.CodeAnalysis
 
             _tokens = tokens.ToImmutableArray();
             _diagnostics.AddRange(lexer.Diagnostics);
+            _text = text;
         }
 
         public DiagnosticBag Diagnostics => _diagnostics;
@@ -67,7 +70,7 @@ namespace Language.CodeAnalysis
             var expression = ParseExpression();
             var endOfFile = MatchToken(SyntaxKind.EndOfFileToken);
 
-            return new SyntaxTree(_diagnostics.ToImmutableArray(), expression, endOfFile);
+            return new SyntaxTree(_text, _diagnostics.ToImmutableArray(), expression, endOfFile);
         }
 
         private ExpressionSyntax ParseExpression()
