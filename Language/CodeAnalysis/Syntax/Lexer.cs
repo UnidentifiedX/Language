@@ -55,11 +55,11 @@ namespace Language.CodeAnalysis
                     _kind = SyntaxKind.EndOfFileToken;
                     break;
                 case '+':
-                    _kind = SyntaxKind.PlusToken;
+                    _kind = SyntaxKind.PositiveToken;
                     _position++;
                     break;
                 case '-':
-                    _kind = SyntaxKind.MinusToken;
+                    _kind = SyntaxKind.NegativeToken;
                     _position++;
                     break;
                 case '(':
