@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Language.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 
 namespace Language.CodeAnalysis
