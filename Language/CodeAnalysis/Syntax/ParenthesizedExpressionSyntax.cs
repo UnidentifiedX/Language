@@ -11,21 +11,14 @@ namespace Language.CodeAnalysis.Syntax
     {
         public ParenthesizedExpressionSyntax(SyntaxToken openParenthesis, ExpressionSyntax expression, SyntaxToken closeParenthesis)
         {
-            OpenParenthesis = openParenthesis;
+            OpenParenthesisToken = openParenthesis;
             Expression = expression;
-            CloseParenthesis = closeParenthesis;
+            CloseParenthesisToken = closeParenthesis;
         }
 
         public override SyntaxKind Kind => SyntaxKind.ParenthesizedExpression;
-        public SyntaxToken OpenParenthesis { get; }
+        public SyntaxToken OpenParenthesisToken { get; }
         public ExpressionSyntax Expression { get; }
-        public SyntaxToken CloseParenthesis { get; }
-
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            yield return OpenParenthesis;
-            yield return Expression;
-            yield return CloseParenthesis;
-        }
+        public SyntaxToken CloseParenthesisToken { get; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Language.CodeAnalysis;
 using Language.CodeAnalysis.Binding;
+using Language.CodeAnalysis.Syntax;
 
 namespace Language
 {
