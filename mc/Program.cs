@@ -22,7 +22,7 @@ namespace Language
                 if (textBuilder.Length == 0)
                     Console.Write("> ");
                 else
-                    Console.Write("| ");
+                    Console.Write("· ");
 
                 var input = Console.ReadLine();
                 var isBlank = string.IsNullOrWhiteSpace(input);
