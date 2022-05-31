@@ -52,11 +52,9 @@ namespace Language.CodeAnalysis.Syntax
             writer.Write(indent);
 
             if (isToConsole)
-            {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
-                writer.Write(marker);
-                Console.ResetColor();
-            }
+
+            writer.Write(marker);
 
             if (isToConsole)
                 Console.ForegroundColor = node is SyntaxToken ? ConsoleColor.Blue : ConsoleColor.Cyan;
