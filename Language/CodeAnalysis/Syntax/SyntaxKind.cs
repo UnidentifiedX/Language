@@ -30,6 +30,8 @@
         UnaryExpression,
         TrueKeyword,
         FalseKeyword,
-        AssignmentExpression
+        AssignmentExpression,
+        PositiveToken,
+        NegativeToken
     }
 }

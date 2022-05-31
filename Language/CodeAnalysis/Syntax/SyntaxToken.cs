@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Language.CodeAnalysis.Syntax;
+using Language.CodeAnalysis.Text;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Language.CodeAnalysis
@@ -17,11 +19,6 @@ namespace Language.CodeAnalysis
         public int Position { get; }
         public string Text { get; }
         public object Value { get; }
-        public TextSpan Span => new TextSpan(Position, Text.Length);
-
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            return Enumerable.Empty<SyntaxNode>();
-        }
+        public override TextSpan Span => new TextSpan(Position, Text?.Length ?? 0);
     }
 }

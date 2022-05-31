@@ -8,6 +8,24 @@ namespace Language.Tests.CodeAnalysis.Syntax
 {
     public class LexerTests
     {
+        [Fact]
+        public void Lexer_Test_AllTokens()
+        {
+            var tokenKinds = Enum.GetValues(typeof(SyntaxKind)).Cast<SyntaxKind>()
+                .Where(k => k.ToString().EndsWith("Keyword") || k.ToString().EndsWith("Token"))
+                .Select(k => (kind: k, text: SyntaxFacts.GetText(k)))
+                .Where(t => t.text != null)
+                .ToList();
+
+            var testedTokenKinds = GetTokens().Concat(GetSeparators()).Select(t => t.kind);
+            var untestedTokenKinds = new SortedSet<SyntaxKind>(testedTokenKinds);
+            untestedTokenKinds.Remove(SyntaxKind.BadToken);
+            untestedTokenKinds.Remove(SyntaxKind.EndOfFileToken);
+            untestedTokenKinds.ExceptWith(testedTokenKinds);
+
+            Assert.Empty(untestedTokenKinds);
+        }               
+        
         [Theory]
         [MemberData(nameof(GetTokensData))]
         public void Lexer_Lex_Token(SyntaxKind kind, string text)
@@ -74,32 +92,20 @@ namespace Language.Tests.CodeAnalysis.Syntax
 
         public static IEnumerable<(SyntaxKind kind, string text)> GetTokens()
         {
-            return new[]
+            var fixedTokens = Enum.GetValues(typeof(SyntaxKind)).Cast<SyntaxKind>()
+                .Select(k => (kind: k, text: SyntaxFacts.GetText(k)))
+                .Where(t => t.text != null);
+
+            var dynanmicTokens = new[]
             {
-                (SyntaxKind.PlusToken, "plus"),
-                (SyntaxKind.MinusToken, "minus"),
-                (SyntaxKind.MultiplicationToken, "multiplied by"),
-                (SyntaxKind.DivisionToken, "divided by"),
-                (SyntaxKind.ModuloToken, "modulo"),
-                (SyntaxKind.NotToken, "not"),
-                (SyntaxKind.RepresentsToken, "represents"),
-                (SyntaxKind.AndToken, "and"),
-                (SyntaxKind.OrToken, "or"),
-                (SyntaxKind.EqualityToken, "is equal to"),
-                (SyntaxKind.InequalityToken, "is not equal to"),
-
-                (SyntaxKind.OpenParenthesisToken, "("),
-                (SyntaxKind.CloseParenthesisToken, ")"),
-
-                (SyntaxKind.FalseKeyword, "false"),
-                (SyntaxKind.TrueKeyword, "true"),
-
                 (SyntaxKind.NumberToken, "1"),
                 (SyntaxKind.NumberToken, "123"),
 
                 (SyntaxKind.IdentifierToken, "a"),
                 (SyntaxKind.IdentifierToken, "abc"),
             };
+
+            return fixedTokens.Concat(dynanmicTokens);
         }
 
         public static IEnumerable<(SyntaxKind kind, string text)> GetSeparators()

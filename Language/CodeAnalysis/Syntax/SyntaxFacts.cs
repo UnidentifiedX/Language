@@ -8,8 +8,8 @@ namespace Language.CodeAnalysis
         {
             switch (kind)
             {
-                case SyntaxKind.PlusToken:
-                case SyntaxKind.MinusToken:
+                case SyntaxKind.PositiveToken:
+                case SyntaxKind.NegativeToken:
                 case SyntaxKind.NotToken:
                     return 6;
                 default:
@@ -78,6 +78,10 @@ namespace Language.CodeAnalysis
         {
             switch (kind)
             {
+                case SyntaxKind.PositiveToken:
+                    return "+";
+                case SyntaxKind.NegativeToken:
+                    return "-";
                 case SyntaxKind.PlusToken:
                     return "plus";
                 case SyntaxKind.MinusToken:
