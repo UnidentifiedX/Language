@@ -60,5 +60,11 @@ namespace Language.CodeAnalysis
             var message = $"Variable '{name}' does not exist";
             Report(span, message);
         }
+
+        public void ReportCannotConvert(TextSpan span, Type fromType, Type toType)
+        {
+            var message = $"Cannot convert from type '{fromType}' to '{toType}'";
+            Report(span, message);
+        }
     }
 }

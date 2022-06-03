@@ -13,6 +13,7 @@ namespace Language.CodeAnalysis
     {
         private readonly ImmutableArray<SyntaxToken> _tokens;
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
+
         private readonly SourceText _text;
         private int _position;
         
@@ -65,12 +66,12 @@ namespace Language.CodeAnalysis
             return new SyntaxToken(kind, Current.Position, null, null);
         }
 
-        public SyntaxTree Parse()
+        public CompilationUnitSyntax ParseCompilationUnit()
         {
             var expression = ParseExpression();
-            var endOfFile = MatchToken(SyntaxKind.EndOfFileToken);
+            var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
 
-            return new SyntaxTree(_text, _diagnostics.ToImmutableArray(), expression, endOfFile);
+            return new CompilationUnitSyntax(expression, endOfFileToken);
         }
 
         private ExpressionSyntax ParseExpression()

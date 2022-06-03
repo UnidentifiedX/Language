@@ -17,6 +17,8 @@ namespace Language
             var variables = new Dictionary<VariableSymbol, object>();
             var textBuilder = new StringBuilder();
 
+            Compilation previous = null;
+
             while(true)
             {
                 if (textBuilder.Length == 0)
@@ -44,6 +46,11 @@ namespace Language
                         Console.Clear();
                         continue;
                     }
+                    else if(input == "/reset")
+                    {
+                        previous = null;
+                        continue;
+                    }
                 }
 
                 textBuilder.AppendLine(input);
@@ -54,7 +61,8 @@ namespace Language
                 if (!isBlank && syntaxTree.Diagnostics.Any())
                     continue;
 
-                var compilation = new Compilation(syntaxTree);
+                var compilation = previous == null ? new Compilation(syntaxTree) : previous.ContinueWith(syntaxTree);
+
                 var result = compilation.Evaluate(variables);
 
                 if (showTree)
@@ -67,6 +75,7 @@ namespace Language
                 if (!result.Diagnostics.Any())
                 {
                     Console.WriteLine(result.Value);
+                    previous = compilation;
                 }
                 else
                 {

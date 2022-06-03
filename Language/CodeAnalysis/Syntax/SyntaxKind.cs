@@ -32,6 +32,9 @@
         FalseKeyword,
         AssignmentExpression,
         PositiveToken,
-        NegativeToken
+        NegativeToken,
+
+        // Noted
+        CompilationUnit
     }
 }
