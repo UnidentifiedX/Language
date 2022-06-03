@@ -66,5 +66,17 @@ namespace Language.CodeAnalysis
             var message = $"Cannot convert from type '{fromType}' to '{toType}'";
             Report(span, message);
         }
+
+        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        {
+            var message = $"Variable '{name}' has already been declared";
+            Report(span, message);
+        }
+
+        internal void ReportCannotAssign(TextSpan span, string name)
+        {
+            var message = $"Variable '{name}' is constant and cannot be assigned to";
+            Report(span, message);
+        }
     }
 }

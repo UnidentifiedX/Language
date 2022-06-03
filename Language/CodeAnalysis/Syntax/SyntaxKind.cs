@@ -30,8 +30,7 @@
         BinaryExpression,
         ParenthesizedExpression,
         UnaryExpression,
-        TrueKeyword,
-        FalseKeyword,
+
         AssignmentExpression,
         PositiveToken,
         NegativeToken,
@@ -41,6 +40,13 @@
 
         // Statements
         BlockStatement,
-        ExpressionStatement
+        ExpressionStatement,
+        VariableDeclaration,
+
+        // Keywords
+        ConstantKeyword,
+        VariableKeyword,
+        TrueKeyword,
+        FalseKeyword,
     }
 }

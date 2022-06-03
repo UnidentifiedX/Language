@@ -48,6 +48,10 @@ namespace Language.CodeAnalysis
                     return SyntaxKind.TrueKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
+                case "constant":
+                    return SyntaxKind.ConstantKeyword;
+                case "variable":
+                    return SyntaxKind.VariableKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
 
@@ -115,7 +119,11 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.TrueKeyword:
                     return "true";
                 case SyntaxKind.FalseKeyword:
-                    return "false";
+                    return "false";                
+                case SyntaxKind.ConstantKeyword:
+                    return "constant";
+                case SyntaxKind.VariableKeyword:
+                    return "variable";
                 default:
                     return null;
             }

@@ -29,6 +29,9 @@ namespace Language.CodeAnalysis
             {
                 case BoundNodeKind.BlockStatement:
                     EvaluateBlockStatement((BoundBlockStatement)node);
+                    break;                
+                case BoundNodeKind.VariableDeclaration:
+                    EvaluateVariableDeclaration((BoundVariableDeclaration)node);
                     break;
                 case BoundNodeKind.ExpressionStatement:
                     EvaluateExpressionStatement((BoundExpressionStatement)node);
@@ -38,6 +41,13 @@ namespace Language.CodeAnalysis
             }
         }
 
+        private void EvaluateVariableDeclaration(BoundVariableDeclaration node)
+        {
+            var value = EvaluateExpression(node.Initializer);
+            _variables[node.Variable] = value;
+            _lastValue = value;
+        }        
+        
         private void EvaluateBlockStatement(BoundBlockStatement node)
         {
             foreach(var statement in node.Statements) 

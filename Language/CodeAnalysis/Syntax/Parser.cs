@@ -76,11 +76,18 @@ namespace Language.CodeAnalysis
 
         private StatementSyntax ParseStatement()
         {
-            if (Current.Kind == SyntaxKind.OpenBraceToken)
-                return ParseBlockStatement();
+            switch (Current.Kind)
+            {
+                case SyntaxKind.OpenBraceToken:
+                    return ParseBlockStatement();
+                case SyntaxKind.ConstantKeyword:
+                case SyntaxKind.VariableKeyword:
+                    return ParseVariableDeclaration();
+            }
 
             return ParseExpressionStatement();
         }
+
         private BlockStatementSyntax ParseBlockStatement()
         {
             var statements = ImmutableArray.CreateBuilder<StatementSyntax>();
@@ -97,6 +104,17 @@ namespace Language.CodeAnalysis
             var closeBraceToken = MatchToken(SyntaxKind.CloseBraceToken);
 
             return new BlockStatementSyntax(openBraceToken, statements.ToImmutable(), closeBraceToken);
+        }
+
+        private StatementSyntax ParseVariableDeclaration()
+        {
+            var expected = Current.Kind == SyntaxKind.ConstantKeyword ? SyntaxKind.ConstantKeyword : SyntaxKind.VariableKeyword;
+            var keyword = MatchToken(expected);
+            var identifier = MatchToken(SyntaxKind.IdentifierToken);
+            var equals = MatchToken(SyntaxKind.RepresentsToken);
+            var initializer = ParseExpression();
+
+            return new VariableDeclarationSyntax(keyword, identifier, equals, initializer);
         }
 
         private ExpressionStatementSyntax ParseExpressionStatement()
