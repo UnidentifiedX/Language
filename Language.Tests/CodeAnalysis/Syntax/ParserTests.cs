@@ -1,4 +1,5 @@
 ﻿using Language.CodeAnalysis;
+using Language.CodeAnalysis.Syntax;
 using System.Collections.Generic;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace Language.Tests.CodeAnalysis.Syntax
             var op2Text = SyntaxFacts.GetText(op2);
             var text = $"a {op1Text} b {op2Text} c";
 
-            var expression = SyntaxTree.Parse(text).Root;
+            var expression = ParseExpression(text);
 
             if(op1Prcedence >= op2Prcedence)
             {
@@ -63,8 +64,7 @@ namespace Language.Tests.CodeAnalysis.Syntax
             var unaryText = SyntaxFacts.GetText(unaryKind);
             var binaryText = SyntaxFacts.GetText(binaryKind);
             var text = $"{unaryText} a {binaryText} b";
-
-            var expression = SyntaxTree.Parse(text).Root;
+            Language.CodeAnalysis.Syntax.ExpressionSyntax expression = ParseExpression(text);
 
             if (unaryPrcedence >= binaryPrcedence)
             {
@@ -94,6 +94,14 @@ namespace Language.Tests.CodeAnalysis.Syntax
                     e.AssertToken(SyntaxKind.IdentifierToken, "b");
                 }
             }
+        }
+
+        private static Language.CodeAnalysis.Syntax.ExpressionSyntax ParseExpression(string text)
+        {
+            SyntaxTree syntaxTree = SyntaxTree.Parse(text);
+            var root = syntaxTree.Root;
+            var statement = root.Statement;
+            return Assert.IsType<ExpressionStatementSyntax>(statement).Expression;
         }
 
         public static IEnumerable<object[]> GetBinaryOperatorPairsData()

@@ -32,7 +32,7 @@ namespace Language.Tests.CodeAnalysis
         [InlineData("not true", false)]
         [InlineData("not false", true)]
 
-        [InlineData("(a represents 10) multiplied by a", 100)]
+        [InlineData(":variable a represents 0 (a represents 10) multiplied by a .", 100)]
         public void SyntaxFact_GetText_RoundTrips(string text, object expectedValue)
         {
             var syntaxTree = SyntaxTree.Parse(text);

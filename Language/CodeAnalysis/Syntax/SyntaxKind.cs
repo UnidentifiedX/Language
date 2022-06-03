@@ -22,16 +22,31 @@
         NameExpression,
         RepresentsToken,
         ModuloToken,
+        OpenBraceToken,
+        CloseBraceToken,
 
         // Expressions
         LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression,
         UnaryExpression,
-        TrueKeyword,
-        FalseKeyword,
+
         AssignmentExpression,
         PositiveToken,
-        NegativeToken
+        NegativeToken,
+
+        // Nodes
+        CompilationUnit,
+
+        // Statements
+        BlockStatement,
+        ExpressionStatement,
+        VariableDeclaration,
+
+        // Keywords
+        ConstantKeyword,
+        VariableKeyword,
+        TrueKeyword,
+        FalseKeyword,
     }
 }

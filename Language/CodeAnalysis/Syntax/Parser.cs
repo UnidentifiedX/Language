@@ -13,6 +13,7 @@ namespace Language.CodeAnalysis
     {
         private readonly ImmutableArray<SyntaxToken> _tokens;
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
+
         private readonly SourceText _text;
         private int _position;
         
@@ -65,12 +66,61 @@ namespace Language.CodeAnalysis
             return new SyntaxToken(kind, Current.Position, null, null);
         }
 
-        public SyntaxTree Parse()
+        public CompilationUnitSyntax ParseCompilationUnit()
+        {
+            var statement = ParseStatement();
+            var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
+
+            return new CompilationUnitSyntax(statement, endOfFileToken);
+        }
+
+        private StatementSyntax ParseStatement()
+        {
+            switch (Current.Kind)
+            {
+                case SyntaxKind.OpenBraceToken:
+                    return ParseBlockStatement();
+                case SyntaxKind.ConstantKeyword:
+                case SyntaxKind.VariableKeyword:
+                    return ParseVariableDeclaration();
+            }
+
+            return ParseExpressionStatement();
+        }
+
+        private BlockStatementSyntax ParseBlockStatement()
+        {
+            var statements = ImmutableArray.CreateBuilder<StatementSyntax>();
+
+            var openBraceToken = MatchToken(SyntaxKind.OpenBraceToken);
+
+            while(Current.Kind != SyntaxKind.EndOfFileToken &&
+                Current.Kind != SyntaxKind.CloseBraceToken)
+            {
+                var statement = ParseStatement();
+                statements.Add(statement);
+            }
+
+            var closeBraceToken = MatchToken(SyntaxKind.CloseBraceToken);
+
+            return new BlockStatementSyntax(openBraceToken, statements.ToImmutable(), closeBraceToken);
+        }
+
+        private StatementSyntax ParseVariableDeclaration()
+        {
+            var expected = Current.Kind == SyntaxKind.ConstantKeyword ? SyntaxKind.ConstantKeyword : SyntaxKind.VariableKeyword;
+            var keyword = MatchToken(expected);
+            var identifier = MatchToken(SyntaxKind.IdentifierToken);
+            var equals = MatchToken(SyntaxKind.RepresentsToken);
+            var initializer = ParseExpression();
+
+            return new VariableDeclarationSyntax(keyword, identifier, equals, initializer);
+        }
+
+        private ExpressionStatementSyntax ParseExpressionStatement()
         {
             var expression = ParseExpression();
-            var endOfFile = MatchToken(SyntaxKind.EndOfFileToken);
-
-            return new SyntaxTree(_text, _diagnostics.ToImmutableArray(), expression, endOfFile);
+            return new ExpressionStatementSyntax(expression);
         }
 
         private ExpressionSyntax ParseExpression()
