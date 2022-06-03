@@ -108,6 +108,10 @@ namespace Language.CodeAnalysis
                     return "represents";
                 case SyntaxKind.ModuloToken:
                     return "modulo";
+                case SyntaxKind.OpenBraceToken:
+                    return ":";
+                case SyntaxKind.CloseBraceToken:
+                    return ".";
                 case SyntaxKind.TrueKeyword:
                     return "true";
                 case SyntaxKind.FalseKeyword:

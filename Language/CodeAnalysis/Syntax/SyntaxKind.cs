@@ -22,6 +22,8 @@
         NameExpression,
         RepresentsToken,
         ModuloToken,
+        OpenBraceToken,
+        CloseBraceToken,
 
         // Expressions
         LiteralExpression,
@@ -34,7 +36,11 @@
         PositiveToken,
         NegativeToken,
 
-        // Noted
-        CompilationUnit
+        // Nodes
+        CompilationUnit,
+
+        // Statements
+        BlockStatement,
+        ExpressionStatement
     }
 }
