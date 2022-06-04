@@ -76,6 +76,22 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             AssertDiagnostics(text, diagnostics);
+        }         
+        
+        [Fact]
+        public void Evaluator_BlockStatement_NoInfiniteLoop()
+        {
+            var text = @"
+                :
+                [)][]
+            ";
+
+            var diagnostics = @"
+                Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>
+                Unexpected token <EndOfFileToken>, expected <CloseBraceToken>
+            ";
+
+            AssertDiagnostics(text, diagnostics);
         }        
         
         [Fact]
@@ -85,6 +101,18 @@ namespace Language.Tests.CodeAnalysis
 
             var diagnostics = @"
                 Variable 'x' does not exist
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }          
+        
+        [Fact]
+        public void Evaluator_NameExpression_Reports_NoErrorForInsertedToken()
+        {
+            var text = @"[]";
+
+            var diagnostics = @"
+                Unexpected token <EndOfFileToken>, expected <IdentifierToken>
             ";
 
             AssertDiagnostics(text, diagnostics);

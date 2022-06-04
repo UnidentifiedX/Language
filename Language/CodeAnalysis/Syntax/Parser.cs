@@ -103,8 +103,14 @@ namespace Language.CodeAnalysis
             while(Current.Kind != SyntaxKind.EndOfFileToken &&
                 Current.Kind != SyntaxKind.CloseBraceToken)
             {
+                var startToken = Current;
+
                 var statement = ParseStatement();
                 statements.Add(statement);
+
+                // To prevent an infinite loop if ParseStatement() did not consume any tokens
+                if(Current == startToken)
+                    NextToken();
             }
 
             var closeBraceToken = MatchToken(SyntaxKind.CloseBraceToken);
