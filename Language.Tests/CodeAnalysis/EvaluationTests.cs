@@ -58,7 +58,7 @@ namespace Language.Tests.CodeAnalysis
         }
 
         [Fact]
-        public void Evaluator_Variable_Declaration_Reports_Redeclaration()
+        public void Evaluator_VariableDeclaration_Reports_Redeclaration()
         {
             var text = @"
                 :
@@ -79,7 +79,7 @@ namespace Language.Tests.CodeAnalysis
         }        
         
         [Fact]
-        public void Evaluator_Name_Reports_Undefined()
+        public void Evaluator_NameExpression_Reports_Undefined()
         {
             var text = @"[x] multiplied by 10";
 
@@ -91,7 +91,7 @@ namespace Language.Tests.CodeAnalysis
         }        
         
         [Fact]
-        public void Evaluator_Assigned_Reports_Undefined()
+        public void Evaluator_AssignmentExpression_Reports_Undefined()
         {
             var text = @"[x] represents 10";
 
@@ -103,7 +103,7 @@ namespace Language.Tests.CodeAnalysis
         }        
         
         [Fact]
-        public void Evaluator_Assigned_Reports_CannotAssign()
+        public void Evaluator_AssignmentExpression_Reports_CannotAssign()
         {
             var text = @"
                 :
@@ -120,7 +120,7 @@ namespace Language.Tests.CodeAnalysis
         }        
         
         [Fact]
-        public void Evaluator_Assigned_Reports_CannotConvert()
+        public void Evaluator_AssignmentExpression_Reports_CannotConvert()
         {
             var text = @"
                 :
@@ -209,7 +209,7 @@ namespace Language.Tests.CodeAnalysis
         }        
         
         [Fact]
-        public void Evaluator_Unary_Reports_Undefined()
+        public void Evaluator_UnaryExpression_Reports_Undefined()
         {
             var text = @"[+]true";
 
@@ -221,7 +221,7 @@ namespace Language.Tests.CodeAnalysis
         }        
         
         [Fact]
-        public void Evaluator_Binary_Reports_Undefined()
+        public void Evaluator_BinaryExpression_Reports_Undefined()
         {
             var text = @"10 [multiplied by] false";
 
