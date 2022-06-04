@@ -48,6 +48,7 @@
         ExpressionStatement,
         VariableDeclaration,
         IfStatement,
+        WhileStatement,
 
         // Keywords
         ConstantKeyword,
@@ -55,6 +56,7 @@
         TrueKeyword,
         FalseKeyword,
         ElseKeyword,
-        IfKeyword
+        IfKeyword,
+        WhileKeyword
     }
 }

@@ -59,7 +59,9 @@ namespace Language.CodeAnalysis
                 case "constant":
                     return SyntaxKind.ConstantKeyword;
                 case "variable":
-                    return SyntaxKind.VariableKeyword;
+                    return SyntaxKind.VariableKeyword;                
+                case "while":
+                    return SyntaxKind.WhileKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
 
@@ -143,7 +145,9 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.ConstantKeyword:
                     return "constant";
                 case SyntaxKind.VariableKeyword:
-                    return "variable";
+                    return "variable";                
+                case SyntaxKind.WhileKeyword:
+                    return "while";
                 default:
                     return null;
             }
