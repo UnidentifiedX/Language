@@ -30,6 +30,10 @@ namespace Language.CodeAnalysis
                     return 4;
                 case SyntaxKind.EqualityToken:
                 case SyntaxKind.InequalityToken:
+                case SyntaxKind.LessToken:
+                case SyntaxKind.GreaterToken:
+                case SyntaxKind.GreaterOrEqualsToken:
+                case SyntaxKind.LessOrEqualsToken:
                     return 3;
                 case SyntaxKind.AndToken:
                     return 2;
@@ -105,7 +109,15 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.OrToken:
                     return "or";
                 case SyntaxKind.EqualityToken:
-                    return "is equal to";
+                    return "is equal to";                
+                case SyntaxKind.GreaterOrEqualsToken:
+                    return "is greater than or equal to";                
+                case SyntaxKind.LessOrEqualsToken:
+                    return "is less than or equal to";                
+                case SyntaxKind.GreaterToken:
+                    return "is greater than";                
+                case SyntaxKind.LessToken:
+                    return "is less than";
                 case SyntaxKind.InequalityToken:
                     return "is not equal to";
                 case SyntaxKind.RepresentsToken:

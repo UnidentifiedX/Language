@@ -18,6 +18,18 @@ namespace Language.Tests.CodeAnalysis
         [InlineData("9 modulo 2", 1)]
         [InlineData("(10)", 10)]
 
+        [InlineData("4 is greater than 3", true)]
+        [InlineData("4 is greater than 5", false)]
+        [InlineData("4 is greater than or equal to 4", true)]
+        [InlineData("5 is greater than or equal to 4", true)]
+        [InlineData("4 is greater than or equal to 5", false)]        
+        
+        [InlineData("3 is less than 4", true)]
+        [InlineData("5 is less than 4", false)]
+        [InlineData("4 is less than or equal to 4", true)]
+        [InlineData("4 is less than or equal to 5", true)]
+        [InlineData("5 is less than or equal to 4", false)]
+
         [InlineData("12 is equal to 3", false)]
         [InlineData("3 is equal to 3", true)]
         [InlineData("12 is not equal to 3", true)]

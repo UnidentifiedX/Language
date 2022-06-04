@@ -135,6 +135,14 @@ namespace Language.CodeAnalysis
                     return (bool)left && (bool)right;
                 case BoundBinaryOperatorKind.LogicalOr:
                     return (bool)left || (bool)right;
+                case BoundBinaryOperatorKind.GreaterThan:
+                    return (int)left > (int)right;                
+                case BoundBinaryOperatorKind.GreaterOrEquals:
+                    return (int)left >= (int)right;                
+                case BoundBinaryOperatorKind.LessThan:
+                    return (int)left < (int)right;                
+                case BoundBinaryOperatorKind.LessOrEquals:
+                    return (int)left <= (int)right;
                 case BoundBinaryOperatorKind.Equals:
                     return Equals(left, right);
                 case BoundBinaryOperatorKind.NotEquals:

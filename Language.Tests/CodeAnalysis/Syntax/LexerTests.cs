@@ -150,6 +150,18 @@ namespace Language.Tests.CodeAnalysis.Syntax
                 return true;
 
             if (t1Kind == SyntaxKind.RepresentsToken && t2Kind == SyntaxKind.EqualityToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.LessToken && t2Kind == SyntaxKind.EqualityToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.LessToken && t2Kind == SyntaxKind.RepresentsToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.GreaterToken && t2Kind == SyntaxKind.EqualityToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.GreaterToken && t2Kind == SyntaxKind.RepresentsToken)
                 return true;
 
             return false;

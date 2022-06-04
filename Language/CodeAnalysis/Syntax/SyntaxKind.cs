@@ -18,6 +18,10 @@
         AndToken,
         OrToken,
         EqualityToken,
+        GreaterOrEqualsToken,
+        LessOrEqualsToken,
+        GreaterToken,
+        LessToken,
         InequalityToken,
         NameExpression,
         RepresentsToken,
@@ -47,6 +51,6 @@
         ConstantKeyword,
         VariableKeyword,
         TrueKeyword,
-        FalseKeyword,
+        FalseKeyword
     }
 }
