@@ -48,6 +48,10 @@ namespace Language.CodeAnalysis
         {
             switch (text)
             {
+                case "if":
+                    return SyntaxKind.IfKeyword;                
+                case "else":
+                    return SyntaxKind.ElseKeyword;
                 case "true":
                     return SyntaxKind.TrueKeyword;
                 case "false":
@@ -128,6 +132,10 @@ namespace Language.CodeAnalysis
                     return ":";
                 case SyntaxKind.CloseBraceToken:
                     return ".";
+                case SyntaxKind.IfKeyword:
+                    return "if";
+                case SyntaxKind.ElseKeyword:
+                    return "else";
                 case SyntaxKind.TrueKeyword:
                     return "true";
                 case SyntaxKind.FalseKeyword:

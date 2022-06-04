@@ -41,16 +41,20 @@
 
         // Nodes
         CompilationUnit,
+        ElseClause,
 
         // Statements
         BlockStatement,
         ExpressionStatement,
         VariableDeclaration,
+        IfStatement,
 
         // Keywords
         ConstantKeyword,
         VariableKeyword,
         TrueKeyword,
-        FalseKeyword
+        FalseKeyword,
+        ElseKeyword,
+        IfKeyword
     }
 }

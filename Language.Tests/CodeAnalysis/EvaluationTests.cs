@@ -44,7 +44,12 @@ namespace Language.Tests.CodeAnalysis
         [InlineData("not true", false)]
         [InlineData("not false", true)]
 
-        [InlineData(":variable a represents 0 (a represents 10) multiplied by a .", 100)]
+        [InlineData(":variable a represents 0 (a represents 10) multiplied by a.", 100)]
+        [InlineData(":variable a represents 0 if a is equal to 0 a represents 10 a.", 10)]
+        [InlineData(":variable a represents 0 if a is equal to 4 a represents 10 a.", 0)]        
+        
+        [InlineData(":variable a represents 0 if a is equal to 0 a represents 10 else a represents 5 a.", 10)]
+        [InlineData(":variable a represents 0 if a is equal to 4 a represents 10 else a represents 5 a.", 5)]
         public void SyntaxFact_GetText_RoundTrips(string text, object expectedValue)
         {
             AssertValue(text, expectedValue);
