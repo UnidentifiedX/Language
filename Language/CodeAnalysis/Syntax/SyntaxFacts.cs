@@ -56,6 +56,10 @@ namespace Language.CodeAnalysis
                     return SyntaxKind.TrueKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
+                case "for":
+                    return SyntaxKind.ForKeyword;                
+                case "to":
+                    return SyntaxKind.ToKeyword;
                 case "constant":
                     return SyntaxKind.ConstantKeyword;
                 case "variable":
@@ -141,7 +145,11 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.TrueKeyword:
                     return "true";
                 case SyntaxKind.FalseKeyword:
-                    return "false";                
+                    return "false";                   
+                case SyntaxKind.ForKeyword:
+                    return "for";                   
+                case SyntaxKind.ToKeyword:
+                    return "to";                
                 case SyntaxKind.ConstantKeyword:
                     return "constant";
                 case SyntaxKind.VariableKeyword:
