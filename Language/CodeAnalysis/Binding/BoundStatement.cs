@@ -5,16 +5,21 @@
 
     }
 
-    internal sealed class BoundVariableDeclaration : BoundStatement
+    internal sealed class BoundForStatement : BoundStatement
     {
-        public BoundVariableDeclaration(VariableSymbol variable, BoundExpression initializer)
+        public BoundForStatement(VariableSymbol variable, BoundExpression lowerBound, BoundExpression upperBound, BoundStatement body)
         {
             Variable = variable;
-            Initializer = initializer;
+            LowerBound = lowerBound;
+            UpperBound = upperBound;
+            Body = body;
         }
 
-        public override BoundNodeKind Kind => BoundNodeKind.VariableDeclaration;
+        public override BoundNodeKind Kind => BoundNodeKind.ForStatement;
+
         public VariableSymbol Variable { get; }
-        public BoundExpression Initializer { get; }
+        public BoundExpression LowerBound { get; }
+        public BoundExpression UpperBound { get; }
+        public BoundStatement Body { get; }
     }
 }

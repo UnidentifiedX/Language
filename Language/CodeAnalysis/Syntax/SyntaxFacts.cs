@@ -30,6 +30,10 @@ namespace Language.CodeAnalysis
                     return 4;
                 case SyntaxKind.EqualityToken:
                 case SyntaxKind.InequalityToken:
+                case SyntaxKind.LessToken:
+                case SyntaxKind.GreaterToken:
+                case SyntaxKind.GreaterOrEqualsToken:
+                case SyntaxKind.LessOrEqualsToken:
                     return 3;
                 case SyntaxKind.AndToken:
                     return 2;
@@ -44,14 +48,24 @@ namespace Language.CodeAnalysis
         {
             switch (text)
             {
+                case "if":
+                    return SyntaxKind.IfKeyword;                
+                case "else":
+                    return SyntaxKind.ElseKeyword;
                 case "true":
                     return SyntaxKind.TrueKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
+                case "for":
+                    return SyntaxKind.ForKeyword;                
+                case "to":
+                    return SyntaxKind.ToKeyword;
                 case "constant":
                     return SyntaxKind.ConstantKeyword;
                 case "variable":
-                    return SyntaxKind.VariableKeyword;
+                    return SyntaxKind.VariableKeyword;                
+                case "while":
+                    return SyntaxKind.WhileKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
 
@@ -105,7 +119,15 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.OrToken:
                     return "or";
                 case SyntaxKind.EqualityToken:
-                    return "is equal to";
+                    return "is equal to";                
+                case SyntaxKind.GreaterOrEqualsToken:
+                    return "is greater than or equal to";                
+                case SyntaxKind.LessOrEqualsToken:
+                    return "is less than or equal to";                
+                case SyntaxKind.GreaterToken:
+                    return "is greater than";                
+                case SyntaxKind.LessToken:
+                    return "is less than";
                 case SyntaxKind.InequalityToken:
                     return "is not equal to";
                 case SyntaxKind.RepresentsToken:
@@ -116,14 +138,24 @@ namespace Language.CodeAnalysis
                     return ":";
                 case SyntaxKind.CloseBraceToken:
                     return ".";
+                case SyntaxKind.IfKeyword:
+                    return "if";
+                case SyntaxKind.ElseKeyword:
+                    return "else";
                 case SyntaxKind.TrueKeyword:
                     return "true";
                 case SyntaxKind.FalseKeyword:
-                    return "false";                
+                    return "false";                   
+                case SyntaxKind.ForKeyword:
+                    return "for";                   
+                case SyntaxKind.ToKeyword:
+                    return "to";                
                 case SyntaxKind.ConstantKeyword:
                     return "constant";
                 case SyntaxKind.VariableKeyword:
-                    return "variable";
+                    return "variable";                
+                case SyntaxKind.WhileKeyword:
+                    return "while";
                 default:
                     return null;
             }

@@ -83,9 +83,15 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.ConstantKeyword:
                 case SyntaxKind.VariableKeyword:
                     return ParseVariableDeclaration();
+                case SyntaxKind.IfKeyword:
+                    return ParseIfStatement();
+                case SyntaxKind.ForKeyword:
+                    return ParseForStatement();
+                case SyntaxKind.WhileKeyword:
+                    return ParseWhileStatement();
+                default:
+                    return ParseExpressionStatement();
             }
-
-            return ParseExpressionStatement();
         }
 
         private BlockStatementSyntax ParseBlockStatement()
@@ -97,8 +103,14 @@ namespace Language.CodeAnalysis
             while(Current.Kind != SyntaxKind.EndOfFileToken &&
                 Current.Kind != SyntaxKind.CloseBraceToken)
             {
+                var startToken = Current;
+
                 var statement = ParseStatement();
                 statements.Add(statement);
+
+                // To prevent an infinite loop if ParseStatement() did not consume any tokens
+                if(Current == startToken)
+                    NextToken();
             }
 
             var closeBraceToken = MatchToken(SyntaxKind.CloseBraceToken);
@@ -115,6 +127,48 @@ namespace Language.CodeAnalysis
             var initializer = ParseExpression();
 
             return new VariableDeclarationSyntax(keyword, identifier, equals, initializer);
+        }
+
+        private StatementSyntax ParseIfStatement()
+        {
+            var keyword = MatchToken(SyntaxKind.IfKeyword);
+            var condition = ParseExpression();
+            var statement = ParseStatement();
+            var elseClause = ParseElseClause();
+
+            return new IfStatementSyntax(keyword, condition, statement, elseClause);
+        }
+        private StatementSyntax ParseForStatement()
+        {
+            var keyword = MatchToken(SyntaxKind.ForKeyword);
+            var identifier = MatchToken(SyntaxKind.IdentifierToken);
+            var representsToken = MatchToken(SyntaxKind.RepresentsToken);
+            var lowerBound = ParseExpression();
+            var toKeyword = MatchToken(SyntaxKind.ToKeyword);
+            var upperBound = ParseExpression();
+            var body = ParseStatement();
+
+            return new ForStatementSyntax(keyword, identifier, representsToken, lowerBound, toKeyword, upperBound, body);
+        }
+
+        private ElseClauseSyntax ParseElseClause()
+        {
+            if(Current.Kind != SyntaxKind.ElseKeyword)
+                return null;
+
+            var keyword = NextToken();
+            var statement = ParseStatement();
+
+            return new ElseClauseSyntax(keyword, statement);
+        }
+
+        private StatementSyntax ParseWhileStatement()
+        {
+            var keyword = MatchToken(SyntaxKind.WhileKeyword);
+            var condition = ParseExpression();
+            var body = ParseStatement();
+
+            return new WhileStatementSyntax(keyword, condition, body);
         }
 
         private ExpressionStatementSyntax ParseExpressionStatement()

@@ -44,12 +44,12 @@ namespace Language.Tests.CodeAnalysis.Syntax
             var text = t1Text + " " + t2Text;
             var tokens = SyntaxTree.ParseTokens(text, true).ToArray();
 
-            Assert.Equal(2, tokens.Length);
-            Assert.Equal(tokens[0].Kind, t1Kind);
-            Assert.Equal(tokens[0].Text, t1Text);            
+            Assert.Equal(2, tokens.Length);   
+            Assert.Equal(t1Kind, tokens[0].Kind);
+            Assert.Equal(t1Text, tokens[0].Text);
             
-            Assert.Equal(tokens[1].Kind, t2Kind);
-            Assert.Equal(tokens[1].Text, t2Text);
+            Assert.Equal(t2Kind, tokens[1].Kind);
+            Assert.Equal(t2Text, tokens[1].Text);
         }        
         
         [Theory]
@@ -62,14 +62,14 @@ namespace Language.Tests.CodeAnalysis.Syntax
             var tokens = SyntaxTree.ParseTokens(text, false).ToArray();
 
             Assert.Equal(3, tokens.Length);
-            Assert.Equal(tokens[0].Kind, t1Kind);
-            Assert.Equal(tokens[0].Text, t1Text);            
+            Assert.Equal(t1Kind, tokens[0].Kind);
+            Assert.Equal(t1Text, tokens[0].Text);
+                
+            Assert.Equal(separatorKind, tokens[1].Kind);
+            Assert.Equal(separatorText, tokens[1].Text);
             
-            Assert.Equal(tokens[1].Kind, separatorKind);
-            Assert.Equal(tokens[1].Text, separatorText);            
-            
-            Assert.Equal(tokens[2].Kind, t2Kind);
-            Assert.Equal(tokens[2].Text, t2Text);
+            Assert.Equal(t2Kind, tokens[2].Kind);
+            Assert.Equal(t2Text, tokens[2].Text);
         }
 
         public static IEnumerable<object[]> GetTokensData()
@@ -150,6 +150,18 @@ namespace Language.Tests.CodeAnalysis.Syntax
                 return true;
 
             if (t1Kind == SyntaxKind.RepresentsToken && t2Kind == SyntaxKind.EqualityToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.LessToken && t2Kind == SyntaxKind.EqualityToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.LessToken && t2Kind == SyntaxKind.RepresentsToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.GreaterToken && t2Kind == SyntaxKind.EqualityToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.GreaterToken && t2Kind == SyntaxKind.RepresentsToken)
                 return true;
 
             return false;

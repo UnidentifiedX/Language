@@ -29,6 +29,15 @@ namespace Language.CodeAnalysis
             {
                 case BoundNodeKind.BlockStatement:
                     EvaluateBlockStatement((BoundBlockStatement)node);
+                    break;                      
+                case BoundNodeKind.IfStatement:
+                    EvaluateIfStatement((BoundIfStatement)node);
+                    break;                    
+                case BoundNodeKind.WhileStatement:
+                    EvaluateWhileStatement((BoundWhileStatement)node);
+                    break;                   
+                case BoundNodeKind.ForStatement:
+                    EvaluateForStatement((BoundForStatement)node);
                     break;                
                 case BoundNodeKind.VariableDeclaration:
                     EvaluateVariableDeclaration((BoundVariableDeclaration)node);
@@ -38,6 +47,31 @@ namespace Language.CodeAnalysis
                     break;
                 default:
                     throw new Exception($"Undexpected node {node.Kind}");
+            }
+        }
+
+        private void EvaluateIfStatement(BoundIfStatement node)
+        {
+            var condition = (bool)EvaluateExpression(node.Condition);
+            if (condition)
+                EvaluateStatement(node.ThenStatement);
+            else if(node.ElseStatement != null)
+                EvaluateStatement(node.ElseStatement);
+        }
+        private void EvaluateWhileStatement(BoundWhileStatement node)
+        {
+            while ((bool)EvaluateExpression(node.Condition))
+                EvaluateStatement(node.Body);
+        }
+        private void EvaluateForStatement(BoundForStatement node)
+        {
+            var lowerBound = (int)EvaluateExpression(node.LowerBound);
+            var upperBound = (int)EvaluateExpression(node.UpperBound);
+
+            for(int i = lowerBound; i <= upperBound; i++)
+            {
+                _variables[node.Variable] = i;
+                EvaluateStatement(node.Body);
             }
         }
 
@@ -135,6 +169,14 @@ namespace Language.CodeAnalysis
                     return (bool)left && (bool)right;
                 case BoundBinaryOperatorKind.LogicalOr:
                     return (bool)left || (bool)right;
+                case BoundBinaryOperatorKind.GreaterThan:
+                    return (int)left > (int)right;                
+                case BoundBinaryOperatorKind.GreaterOrEquals:
+                    return (int)left >= (int)right;                
+                case BoundBinaryOperatorKind.LessThan:
+                    return (int)left < (int)right;                
+                case BoundBinaryOperatorKind.LessOrEquals:
+                    return (int)left <= (int)right;
                 case BoundBinaryOperatorKind.Equals:
                     return Equals(left, right);
                 case BoundBinaryOperatorKind.NotEquals:

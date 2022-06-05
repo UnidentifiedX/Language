@@ -10,6 +10,10 @@
         LogicalOr,
         Equals,
         NotEquals,
-        Modulo
+        Modulo,
+        GreaterThan,
+        LessThan,
+        GreaterOrEquals,
+        LessOrEquals
     }
 }

@@ -18,6 +18,10 @@
         AndToken,
         OrToken,
         EqualityToken,
+        GreaterOrEqualsToken,
+        LessOrEqualsToken,
+        GreaterToken,
+        LessToken,
         InequalityToken,
         NameExpression,
         RepresentsToken,
@@ -37,16 +41,25 @@
 
         // Nodes
         CompilationUnit,
+        ElseClause,
 
         // Statements
         BlockStatement,
         ExpressionStatement,
         VariableDeclaration,
+        IfStatement,
+        WhileStatement,
+        ForStatement,
 
         // Keywords
         ConstantKeyword,
         VariableKeyword,
         TrueKeyword,
         FalseKeyword,
+        ElseKeyword,
+        IfKeyword,
+        WhileKeyword,
+        ForKeyword,
+        ToKeyword
     }
 }

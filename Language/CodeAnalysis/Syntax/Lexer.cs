@@ -102,6 +102,30 @@ namespace Language.CodeAnalysis
                         _position += 11;
                         break;
                     }
+                    else if (LookAhead(1, 26) == "s greater than or equal to")
+                    {
+                        _kind = SyntaxKind.GreaterOrEqualsToken;
+                        _position += 27;
+                        break;
+                    }
+                    else if (LookAhead(1, 23) == "s less than or equal to")
+                    {
+                        _kind = SyntaxKind.LessOrEqualsToken;
+                        _position += 24;
+                        break;
+                    }
+                    else if(LookAhead(1, 14) == "s greater than")
+                    {
+                        _kind = SyntaxKind.GreaterToken;
+                        _position += 15;
+                        break;
+                    }                    
+                    else if(LookAhead(1, 11) == "s less than")
+                    {
+                        _kind = SyntaxKind.LessToken;
+                        _position += 12;
+                        break;
+                    }
                     else if (LookAhead(1, 14) == "s not equal to")
                     {
                         _kind = SyntaxKind.InequalityToken;
