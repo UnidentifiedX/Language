@@ -11,6 +11,7 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.PositiveToken:
                 case SyntaxKind.NegativeToken:
                 case SyntaxKind.NotToken:
+                case SyntaxKind.BitwiseNegationToken:
                     return 6;
                 default:
                     return 0;
@@ -36,8 +37,11 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.LessOrEqualsToken:
                     return 3;
                 case SyntaxKind.AndToken:
+                case SyntaxKind.BitwiseAndToken:
                     return 2;
                 case SyntaxKind.OrToken:
+                case SyntaxKind.BitwiseOrToken:
+                case SyntaxKind.BitwiseXorToken:
                     return 1;
                 default:
                     return 0;
@@ -100,6 +104,8 @@ namespace Language.CodeAnalysis
                     return "+";
                 case SyntaxKind.NegativeToken:
                     return "-";
+                case SyntaxKind.BitwiseNegationToken:
+                    return "~";
                 case SyntaxKind.PlusToken:
                     return "plus";
                 case SyntaxKind.MinusToken:
@@ -156,6 +162,12 @@ namespace Language.CodeAnalysis
                     return "variable";                
                 case SyntaxKind.WhileKeyword:
                     return "while";
+                case SyntaxKind.BitwiseAndToken:
+                    return "&";                
+                case SyntaxKind.BitwiseOrToken:
+                    return "|";                
+                case SyntaxKind.BitwiseXorToken:
+                    return "^";
                 default:
                     return null;
             }
