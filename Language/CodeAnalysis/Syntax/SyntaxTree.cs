@@ -15,7 +15,7 @@ namespace Language.CodeAnalysis
             var diagnostics = parser.Diagnostics.ToImmutableArray();
 
             Text = text;
-            Diagnostics = diagnostics;
+            Diagnostics = parser.Diagnostics.ToImmutableArray();
             Root = root;
         }
 
