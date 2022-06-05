@@ -39,11 +39,15 @@ namespace Language.Tests.CodeAnalysis
         [InlineData("false is not equal to false", false)]
         [InlineData("true is not equal to false", true)]
 
+        [InlineData("true and true", true)]
+        [InlineData("false or false", false)]
         [InlineData("true", true)]
         [InlineData("false", false)]
         [InlineData("not true", false)]
         [InlineData("not false", true)]
 
+        [InlineData("variable a represents 10", 10)]
+        [InlineData(":variable a represents 10 (a multiplied by a).", 100)]
         [InlineData(":variable a represents 0 (a represents 10) multiplied by a.", 100)]
         [InlineData(":variable a represents 0 if a is equal to 0 a represents 10 a.", 10)]
         [InlineData(":variable a represents 0 if a is equal to 4 a represents 10 a.", 0)]        
