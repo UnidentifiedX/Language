@@ -1,4 +1,5 @@
 ﻿using Language.CodeAnalysis.Binding;
+using Language.CodeAnalysis.Lowering;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -49,18 +50,24 @@ namespace Language.CodeAnalysis
         {
             var diagnostics = SyntaxTree.Diagnostics.Concat(GlobalScope.Diagnostics).ToImmutableArray();
             if (diagnostics.Any())
-            {
                 return new EvaluationResult(diagnostics, null);
-            }
 
-            var evaluator = new Evaluator(GlobalScope.Statement, variables);
+            var statement = GetStatement();
+            var evaluator = new Evaluator(statement, variables);
             var value = evaluator.Evaluate();
             return new EvaluationResult(ImmutableArray<Diagnostic>.Empty, value);
         }
 
         public void EmitTree(TextWriter writer)
         {
-            GlobalScope.Statement.WriteTo(writer);
+            var statement = GetStatement();
+            statement.WriteTo(writer);
+        }
+
+        private BoundStatement GetStatement()
+        {
+            var result = GlobalScope.Statement;
+            return Lowerer.Lower(result);
         }
     }
 }
