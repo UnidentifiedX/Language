@@ -162,6 +162,17 @@ namespace Language.Tests.CodeAnalysis.Syntax
                 return true;            
             
             if (t1Kind == SyntaxKind.GreaterToken && t2Kind == SyntaxKind.RepresentsToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.BitwiseAndToken && t2Kind == SyntaxKind.BitwiseAndToken)
+                return true;            
+            if (t1Kind == SyntaxKind.BitwiseAndToken && t2Kind == SyntaxKind.AndToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.BitwiseOrToken && t2Kind == SyntaxKind.BitwiseOrToken)
+                return true;        
+            
+            if (t1Kind == SyntaxKind.BitwiseOrToken && t2Kind == SyntaxKind.OrToken)
                 return true;
 
             return false;

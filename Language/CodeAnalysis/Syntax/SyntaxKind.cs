@@ -28,6 +28,9 @@
         ModuloToken,
         OpenBraceToken,
         CloseBraceToken,
+        BitwiseNegationToken,
+        BitwiseAndToken,
+        BitwiseXorToken,
 
         // Expressions
         LiteralExpression,
@@ -60,6 +63,7 @@
         IfKeyword,
         WhileKeyword,
         ForKeyword,
-        ToKeyword
+        ToKeyword,
+        BitwiseOrToken
     }
 }

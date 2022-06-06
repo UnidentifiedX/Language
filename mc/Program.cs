@@ -13,7 +13,8 @@ namespace Language
     {
         private static void Main(string[] args)
         {
-            bool showTree = false;
+            var showTree = false;
+            var showProgram = false;
             var variables = new Dictionary<VariableSymbol, object>();
             var textBuilder = new StringBuilder();
 
@@ -40,6 +41,12 @@ namespace Language
                         showTree = !showTree;
                         Console.WriteLine(showTree ? "Now showing parse trees" : "No longer showing parse trees");
                         continue;
+                    }                    
+                    else if (input == "/showprogram")
+                    {
+                        showProgram = !showProgram;
+                        Console.WriteLine(showProgram ? "Now showing bound tree" : "No longer showing bound tree");
+                        continue;
                     }
                     else if (input == "/cls")
                     {
@@ -63,15 +70,15 @@ namespace Language
 
                 var compilation = previous == null ? new Compilation(syntaxTree) : previous.ContinueWith(syntaxTree);
 
-                var result = compilation.Evaluate(variables);
 
                 if (showTree)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    syntaxTree.Root.WriteTo(Console.Out);
-                    Console.ResetColor();
-                }
+                    syntaxTree.Root.WriteTo(Console.Out);       
                 
+                if (showProgram)
+                    compilation.EmitTree(Console.Out);
+
+                var result = compilation.Evaluate(variables);
+
                 if (!result.Diagnostics.Any())
                 {
                     Console.WriteLine(result.Value);

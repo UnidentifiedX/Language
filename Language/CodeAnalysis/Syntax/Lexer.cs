@@ -79,6 +79,22 @@ namespace Language.CodeAnalysis
                     _kind = SyntaxKind.CloseBraceToken;
                     _position++;
                     break;
+                case '~':
+                    _kind = SyntaxKind.BitwiseNegationToken;
+                    _position++;
+                    break;
+                case '&':
+                    _kind = SyntaxKind.BitwiseAndToken;
+                    _position++;
+                    break;                
+                case '|':
+                    _kind = SyntaxKind.BitwiseOrToken;
+                    _position++;
+                    break;                
+                case '^':
+                    _kind = SyntaxKind.BitwiseXorToken;
+                    _position++;
+                    break;
                 case 'a':
                     if (LookAhead(1, 2) == "nd")
                     {

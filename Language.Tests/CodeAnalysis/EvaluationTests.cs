@@ -11,6 +11,7 @@ namespace Language.Tests.CodeAnalysis
         [InlineData("1", 1)]
         [InlineData("+1", 1)]
         [InlineData("-1", -1)]
+        [InlineData("~1", -2)]
         [InlineData("14 plus 12", 26)]
         [InlineData("12 minus 3", 9)]
         [InlineData("4 multiplied by 2", 8)]
@@ -22,8 +23,29 @@ namespace Language.Tests.CodeAnalysis
         [InlineData("4 is greater than 5", false)]
         [InlineData("4 is greater than or equal to 4", true)]
         [InlineData("5 is greater than or equal to 4", true)]
-        [InlineData("4 is greater than or equal to 5", false)]        
+        [InlineData("4 is greater than or equal to 5", false)]  
         
+        [InlineData("1 | 2", 3)]
+        [InlineData("1 | 0", 1)]
+        [InlineData("1 & 2", 0)]
+        [InlineData("1 & 0", 0)]
+        [InlineData("1 ^ 0", 1)]
+        [InlineData("0 ^ 1", 1)]
+        [InlineData("1 ^ 3", 2)]
+
+        [InlineData("false | false", false)]
+        [InlineData("false | true", true)]
+        [InlineData("true | false", true)]
+        [InlineData("true | true", true)]
+        [InlineData("false & false", false)]
+        [InlineData("false & true", false)]
+        [InlineData("true & false", false)]
+        [InlineData("true & true", true)]
+        [InlineData("false ^ false", false)]
+        [InlineData("true ^ false", true)]
+        [InlineData("false ^ true", true)]
+        [InlineData("true ^ true", false)]
+
         [InlineData("3 is less than 4", true)]
         [InlineData("5 is less than 4", false)]
         [InlineData("4 is less than or equal to 4", true)]
@@ -56,6 +78,7 @@ namespace Language.Tests.CodeAnalysis
 
         [InlineData(":variable i represents 10 variable result represents 0 while i is greater than 0: result represents result plus i i represents i minus 1. result.", 55)]
         [InlineData(":variable result represents 0 for i represents 1 to 10: result represents result plus i. result.", 55)]
+        [InlineData(":variable a represents 10 for i represents 1 to (a represents a minus 1): . a.", 9)]
         public void SyntaxFact_GetText_RoundTrips(string text, object expectedValue)
         {
             AssertValue(text, expectedValue);

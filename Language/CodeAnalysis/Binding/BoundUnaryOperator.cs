@@ -28,6 +28,7 @@ namespace Language.CodeAnalysis.Binding
 
             new BoundUnaryOperator(SyntaxKind.PositiveToken, BoundUnaryOperatorKind.Identity, typeof(int)),
             new BoundUnaryOperator(SyntaxKind.NegativeToken, BoundUnaryOperatorKind.Negation, typeof(int)),
+            new BoundUnaryOperator(SyntaxKind.BitwiseNegationToken, BoundUnaryOperatorKind.BitwiseNegation, typeof(int))
         };
 
         public static BoundUnaryOperator Bind(SyntaxKind syntaxKind, Type operandType)
