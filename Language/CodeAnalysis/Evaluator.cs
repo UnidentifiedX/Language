@@ -53,11 +53,11 @@ namespace Language.CodeAnalysis
                         var conditionalGotoStatement = (BoundConditionalGotoStatement)s;
                         var condition = (bool)EvaluateExpression(conditionalGotoStatement.Condition);
 
-                        if (condition && !conditionalGotoStatement.JumpIfFalse ||
-                            !condition && conditionalGotoStatement.JumpIfFalse)
+                        if (condition == conditionalGotoStatement.JumpIfTrue)
                             index = labelToIndex[conditionalGotoStatement.Label];
                         else
                             index++;
+
                         break;
                     case BoundNodeKind.LabelStatement:
                         index++;
