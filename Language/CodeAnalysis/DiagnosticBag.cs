@@ -37,6 +37,12 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportUnterminatedString(TextSpan span)
+        {
+            var message = $"Unterminated string literal";
+            Report(span, message);
+        }
+
         public void ReportUnexpectedToken(TextSpan span, SyntaxKind providedKind, SyntaxKind expectedKind)
         {
             var message = $"Unexpected token <{providedKind}>, expected <{expectedKind}>";

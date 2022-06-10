@@ -64,6 +64,7 @@
         WhileKeyword,
         ForKeyword,
         ToKeyword,
-        BitwiseOrToken
+        BitwiseOrToken,
+        StringToken
     }
 }
