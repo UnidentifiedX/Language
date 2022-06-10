@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Language.CodeAnalysis.Symbols;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace Language.CodeAnalysis.Binding
@@ -6,8 +7,6 @@ namespace Language.CodeAnalysis.Binding
     internal sealed class BoundScope
     {
         private Dictionary <string, VariableSymbol> _variables = new();
-
- 
 
         public BoundScope(BoundScope parent)
         {

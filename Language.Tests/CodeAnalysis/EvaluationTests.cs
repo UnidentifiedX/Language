@@ -1,4 +1,5 @@
 ﻿using Language.CodeAnalysis;
+using Language.CodeAnalysis.Symbols;
 using System;
 using System.Collections.Generic;
 using Xunit;

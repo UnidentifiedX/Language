@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Language.CodeAnalysis;
 using Language.CodeAnalysis.Binding;
+using Language.CodeAnalysis.Symbols;
 using Language.CodeAnalysis.Syntax;
 using Language.CodeAnalysis.Text;
 

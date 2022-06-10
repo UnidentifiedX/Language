@@ -1,4 +1,5 @@
-﻿using Language.CodeAnalysis.Syntax;
+﻿using Language.CodeAnalysis.Symbols;
+using Language.CodeAnalysis.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;

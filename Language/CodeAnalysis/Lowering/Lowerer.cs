@@ -1,4 +1,5 @@
 ﻿using Language.CodeAnalysis.Binding;
+using Language.CodeAnalysis.Symbols;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
