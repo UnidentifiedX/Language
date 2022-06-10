@@ -186,7 +186,7 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             var diagnostics = @"
-                Cannot convert from type 'System.Boolean' to 'System.Int32'
+                Cannot convert from type 'boolean' to 'integer'
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -204,7 +204,7 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             var diagnostics = @"
-                Cannot convert from type 'System.Int32' to 'System.Boolean'
+                Cannot convert from type 'integer' to 'boolean'
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -222,7 +222,7 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             var diagnostics = @"
-                Cannot convert from type 'System.Int32' to 'System.Boolean'
+                Cannot convert from type 'integer' to 'boolean'
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -240,7 +240,7 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             var diagnostics = @"
-                Cannot convert from type 'System.Boolean' to 'System.Int32'
+                Cannot convert from type 'boolean' to 'integer'
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -258,7 +258,7 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             var diagnostics = @"
-                Cannot convert from type 'System.Boolean' to 'System.Int32'
+                Cannot convert from type 'boolean' to 'integer'
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -270,7 +270,7 @@ namespace Language.Tests.CodeAnalysis
             var text = @"[+]true";
 
             var diagnostics = @"
-                Unary operator '+' is not defined for type 'System.Boolean'
+                Unary operator '+' is not defined for type 'boolean'
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -282,7 +282,7 @@ namespace Language.Tests.CodeAnalysis
             var text = @"10 [multiplied by] false";
 
             var diagnostics = @"
-                Binary operator 'multiplied by' is not defined for types 'System.Int32' and 'System.Boolean'
+                Binary operator 'multiplied by' is not defined for types 'integer' and 'boolean'
             ";
 
             AssertDiagnostics(text, diagnostics);

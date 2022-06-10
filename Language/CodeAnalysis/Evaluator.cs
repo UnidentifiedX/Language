@@ -159,17 +159,17 @@ namespace Language.CodeAnalysis
                         _m = (int)right;
                     return ((_n % _m) + _m) % _m;
                 case BoundBinaryOperatorKind.BitwiseAnd:
-                    if (b.Type == typeof(int))
+                    if (b.Type == TypeSymbol.Int)
                         return (int)left & (int)right;
                     else
                         return (bool)left & (bool)right;                
                 case BoundBinaryOperatorKind.BitwiseOr:
-                    if (b.Type == typeof(int))
+                    if (b.Type == TypeSymbol.Int)
                         return (int)left | (int)right;
                     else
                         return (bool)left | (bool)right;                
                 case BoundBinaryOperatorKind.BitwiseXor:
-                    if (b.Type == typeof(int))
+                    if (b.Type == TypeSymbol.Int)
                         return (int)left ^ (int)right;
                     else
                         return (bool)left ^ (bool)right;
