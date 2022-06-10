@@ -1,6 +1,7 @@
 ﻿using Language.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Language.CodeAnalysis
 {
@@ -204,6 +205,9 @@ namespace Language.CodeAnalysis
                 case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
                     ReadNumberToken();
                     break;
+                case '"':
+                    ReadString();
+                    break;
                 case ' ': case '\t': case '\n': case '\r': 
                     ReadWhiteSpaceToken();
                     break;
@@ -230,6 +234,47 @@ namespace Language.CodeAnalysis
                 text = _text.ToString(_start, length);
 
             return new SyntaxToken(_kind, _start, text, _value);
+        }
+
+        private void ReadString()
+        {
+            // Skip current quote
+            _position++;
+            var sb = new StringBuilder();
+            var done = false;
+
+            while (!done)
+            {
+                switch (Current)
+                {
+                    case '\0':
+                    case '\r':
+                    case '\n':
+                        var span = new TextSpan(_start, 1);
+                        _diagnostics.ReportUnterminatedString(span);
+                        done = true;
+                        break;
+                    case '"':
+                        if(LookAhead(1, 1) == "\"")
+                        {
+                            sb.Append('"');
+                            _position += 2;
+                        }
+                        else
+                        {
+                            _position++;
+                            done = true;
+                        }
+                        break;
+                    default:
+                        sb.Append(Current);
+                        _position++;
+                        break;
+                }
+            }
+
+            _kind = SyntaxKind.StringToken;
+            _value = sb.ToString();
         }
 
         private void ReadWhiteSpaceToken()
