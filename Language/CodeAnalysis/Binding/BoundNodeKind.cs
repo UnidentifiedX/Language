@@ -8,6 +8,7 @@
         BinaryExpression,
         VariableExpression,
         AssignmentExpression,
+        ErrorExpression,
 
         // Statements
         BlockStatement,
