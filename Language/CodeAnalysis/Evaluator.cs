@@ -97,7 +97,9 @@ namespace Language.CodeAnalysis
                 case BoundNodeKind.UnaryExpression:
                     return EvaluateUnaryExpression((BoundUnaryExpression)node);
                 case BoundNodeKind.BinaryExpression:
-                    return EvaluateBinaryExpression((BoundBinaryExpression)node);
+                    return EvaluateBinaryExpression((BoundBinaryExpression)node);            
+                case BoundNodeKind.CallExpression:
+                    return EvaluateCallExpression((BoundCallExpression)node);
                 default:
                     throw new Exception($"Undexpected node {node.Kind}");
             }
@@ -194,6 +196,23 @@ namespace Language.CodeAnalysis
                     return !Equals(left, right);
                 default:
                     throw new Exception($"Unexpected binary operator {b.Op}");
+            }
+        }
+        private object EvaluateCallExpression(BoundCallExpression node)
+        {
+            if (node.Function == BuitinFunctions.Input)
+            {
+                return Console.ReadLine();
+            }
+            else if (node.Function == BuitinFunctions.Print)
+            {
+                var message = (string)EvaluateExpression(node.Arguments[0]);
+                Console.WriteLine(message);
+                return null;
+            }
+            else
+            {
+                throw new Exception($"Unexpected function {node.Function}");
             }
         }
     }

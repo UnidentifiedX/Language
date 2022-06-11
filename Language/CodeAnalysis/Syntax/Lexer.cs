@@ -80,6 +80,10 @@ namespace Language.CodeAnalysis
                 case '.':
                     _kind = SyntaxKind.CloseBraceToken;
                     _position++;
+                    break;                
+                case ',':
+                    _kind = SyntaxKind.CommaToken;
+                    _position++;
                     break;
                 case '~':
                     _kind = SyntaxKind.BitwiseNegationToken;

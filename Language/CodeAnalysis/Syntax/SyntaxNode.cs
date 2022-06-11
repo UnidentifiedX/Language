@@ -1,6 +1,7 @@
 ﻿using Language.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -31,7 +32,14 @@ namespace Language.CodeAnalysis.Syntax
                     var child = (SyntaxNode)property.GetValue(this);
                     if(child != null)
                         yield return child;
-                } else if (typeof(IEnumerable<SyntaxNode>).IsAssignableFrom(property.PropertyType))
+                } 
+                else if (typeof(SeparatedSyntaxList).IsAssignableFrom(property.PropertyType))
+                {
+                    var separatedSyntaxList = (SeparatedSyntaxList)property.GetValue(this);
+                    foreach (var child in separatedSyntaxList.GetWithSeparators())
+                            yield return child;
+                }                
+                else if (typeof(IEnumerable<SyntaxNode>).IsAssignableFrom(property.PropertyType))
                 {
                     var children = (IEnumerable<SyntaxNode>)property.GetValue(this);
                     foreach (var child in children)

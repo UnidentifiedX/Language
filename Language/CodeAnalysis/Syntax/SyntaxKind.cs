@@ -65,6 +65,8 @@
         ForKeyword,
         ToKeyword,
         BitwiseOrToken,
-        StringToken
+        StringToken,
+        CallExpression,
+        CommaToken
     }
 }

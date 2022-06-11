@@ -143,7 +143,9 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.OpenBraceToken:
                     return ":";
                 case SyntaxKind.CloseBraceToken:
-                    return ".";
+                    return ".";                
+                case SyntaxKind.CommaToken:
+                    return ",";
                 case SyntaxKind.IfKeyword:
                     return "if";
                 case SyntaxKind.ElseKeyword:
