@@ -1,4 +1,5 @@
 ﻿using Language.CodeAnalysis.Binding;
+using Language.CodeAnalysis.Symbols;
 using System;
 using System.Collections.Generic;
 
@@ -19,7 +20,7 @@ namespace Language.CodeAnalysis
 
         public object Evaluate()
         {
-            var labelToIndex = new Dictionary<LabelSymbol, int>();
+            var labelToIndex = new Dictionary<BoundLabel, int>();
             
             for(int i = 0; i < _root.Statements.Length; i++)
             {
@@ -146,7 +147,10 @@ namespace Language.CodeAnalysis
             switch (b.Op.Kind)
             {
                 case BoundBinaryOperatorKind.Addition:
-                    return (int)left + (int)right;
+                    if(b.Type == TypeSymbol.Int)
+                        return (int)left + (int)right;
+                    else 
+                        return (string)left + (string)right;
                 case BoundBinaryOperatorKind.Subtraction:
                     return (int)left - (int)right;
                 case BoundBinaryOperatorKind.Multiplication:
@@ -158,17 +162,17 @@ namespace Language.CodeAnalysis
                         _m = (int)right;
                     return ((_n % _m) + _m) % _m;
                 case BoundBinaryOperatorKind.BitwiseAnd:
-                    if (b.Type == typeof(int))
+                    if (b.Type == TypeSymbol.Int)
                         return (int)left & (int)right;
                     else
                         return (bool)left & (bool)right;                
                 case BoundBinaryOperatorKind.BitwiseOr:
-                    if (b.Type == typeof(int))
+                    if (b.Type == TypeSymbol.Int)
                         return (int)left | (int)right;
                     else
                         return (bool)left | (bool)right;                
                 case BoundBinaryOperatorKind.BitwiseXor:
-                    if (b.Type == typeof(int))
+                    if (b.Type == TypeSymbol.Int)
                         return (int)left ^ (int)right;
                     else
                         return (bool)left ^ (bool)right;

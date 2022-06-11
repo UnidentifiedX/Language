@@ -34,23 +34,41 @@ namespace Language.CodeAnalysis
             return new SyntaxTree(text);
         }
 
-        public static IEnumerable<SyntaxToken> ParseTokens(string text, bool removeWhitespace)
+        public static ImmutableArray<SyntaxToken> ParseTokens(string text, bool removeWhitespace)
         {
             var sourceText = SourceText.From(text);
             return ParseTokens(sourceText, removeWhitespace);
+        }              
+        
+        public static ImmutableArray<SyntaxToken> ParseTokens(string text, bool removeWhitespace, out ImmutableArray<Diagnostic> diagnostics)
+        {
+            var sourceText = SourceText.From(text);
+            return ParseTokens(sourceText, removeWhitespace, out diagnostics);
         }        
         
-        public static IEnumerable<SyntaxToken> ParseTokens(SourceText text, bool removeWhitespace)
+        public static ImmutableArray<SyntaxToken> ParseTokens(SourceText text, bool removeWhitespace)
         {
-            var lexer = new Lexer(text);
-            while(true)
+            return ParseTokens(text, removeWhitespace, out _);
+        }       
+        
+        public static ImmutableArray<SyntaxToken> ParseTokens(SourceText text, bool removeWhitespace, out ImmutableArray<Diagnostic> diagnostics)
+        {
+            IEnumerable<SyntaxToken> LexTokens(Lexer lexer)
             {
-                var token = lexer.Lex();
-                if (token.Kind == SyntaxKind.EndOfFileToken) break;
-                if (removeWhitespace && token.Kind == SyntaxKind.WhitespaceToken) continue;
+                while (true)
+                {
+                    var token = lexer.Lex();
+                    if (token.Kind == SyntaxKind.EndOfFileToken) break;
+                    if (removeWhitespace && token.Kind == SyntaxKind.WhitespaceToken) continue;
 
-                yield return token;
+                    yield return token;
+                }
             }
+
+            var l = new Lexer(text);
+            var result = LexTokens(l).ToImmutableArray();
+            diagnostics = l.Diagnostics.ToImmutableArray();
+            return result;
         }
     }
 }

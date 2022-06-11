@@ -1,5 +1,6 @@
 ﻿using Language.CodeAnalysis.Binding;
 using Language.CodeAnalysis.Lowering;
+using Language.CodeAnalysis.Symbols;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;

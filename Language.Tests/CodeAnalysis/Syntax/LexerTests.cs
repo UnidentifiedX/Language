@@ -1,4 +1,5 @@
 using Language.CodeAnalysis;
+using Language.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,29 @@ namespace Language.Tests.CodeAnalysis.Syntax
 {
     public class LexerTests
     {
+
+
         [Fact]
-        public void Lexer_Test_AllTokens()
+        public void Lexer_Lexes_UnterminatedString()
         {
-            var tokenKinds = Enum.GetValues(typeof(SyntaxKind)).Cast<SyntaxKind>()
-                .Where(k => k.ToString().EndsWith("Keyword") || k.ToString().EndsWith("Token"))
-                .Select(k => (kind: k, text: SyntaxFacts.GetText(k)))
-                .Where(t => t.text != null)
-                .ToList();
+            var text = "\"text";
+            var tokens = SyntaxTree.ParseTokens(text, false, out var diagnostics);
+            var token = Assert.Single(tokens);
+
+            Assert.Equal(SyntaxKind.StringToken, token.Kind);
+            Assert.Equal(text, token.Text);
+
+            var diagnostic = Assert.Single(diagnostics);
+            Assert.Equal(new TextSpan(0, 1), diagnostic.Span);
+            Assert.Equal("Unterminated string literal", diagnostic.Message);
+        }
+
+        [Fact]
+        public void Lexer_Covers_AllTokens()
+        {
+            var tokenKinds = Enum.GetValues(typeof(SyntaxKind))
+                .Cast<SyntaxKind>()
+                .Where(k => k.ToString().EndsWith("Keyword") || k.ToString().EndsWith("Token"));
 
             var testedTokenKinds = GetTokens().Concat(GetSeparators()).Select(t => t.kind);
             var untestedTokenKinds = new SortedSet<SyntaxKind>(testedTokenKinds);
@@ -92,7 +108,8 @@ namespace Language.Tests.CodeAnalysis.Syntax
 
         public static IEnumerable<(SyntaxKind kind, string text)> GetTokens()
         {
-            var fixedTokens = Enum.GetValues(typeof(SyntaxKind)).Cast<SyntaxKind>()
+            var fixedTokens = Enum.GetValues(typeof(SyntaxKind))
+                .Cast<SyntaxKind>()
                 .Select(k => (kind: k, text: SyntaxFacts.GetText(k)))
                 .Where(t => t.text != null);
 
@@ -103,6 +120,9 @@ namespace Language.Tests.CodeAnalysis.Syntax
 
                 (SyntaxKind.IdentifierToken, "a"),
                 (SyntaxKind.IdentifierToken, "abc"),
+
+                (SyntaxKind.StringToken, "\"test\""),
+                (SyntaxKind.StringToken, "\"te\"\"st\""),
             };
 
             return fixedTokens.Concat(dynanmicTokens);
@@ -138,6 +158,9 @@ namespace Language.Tests.CodeAnalysis.Syntax
                 return true;
 
             if (t1Kind == SyntaxKind.NumberToken && t2Kind == SyntaxKind.NumberToken)
+                return true;            
+            
+            if (t1Kind == SyntaxKind.StringToken && t2Kind == SyntaxKind.StringToken)
                 return true;
 
             if (t1Kind == SyntaxKind.NotToken && t2Kind == SyntaxKind.RepresentsToken)
@@ -165,7 +188,8 @@ namespace Language.Tests.CodeAnalysis.Syntax
                 return true;            
             
             if (t1Kind == SyntaxKind.BitwiseAndToken && t2Kind == SyntaxKind.BitwiseAndToken)
-                return true;            
+                return true;     
+            
             if (t1Kind == SyntaxKind.BitwiseAndToken && t2Kind == SyntaxKind.AndToken)
                 return true;            
             

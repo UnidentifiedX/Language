@@ -236,7 +236,9 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.FalseKeyword:
                     return ParseBooleanLiteral();
                 case SyntaxKind.NumberToken:
-                    return ParseNumberLiteral();
+                    return ParseNumberLiteral();               
+                case SyntaxKind.StringToken:
+                    return ParseStringLiteral();
                 case SyntaxKind.IdentifierToken:
                 default:
                     return ParseNameExpression();
@@ -260,12 +262,18 @@ namespace Language.CodeAnalysis
             var keywordToken = isTrue ? MatchToken(SyntaxKind.TrueKeyword) : MatchToken(SyntaxKind.FalseKeyword);
 
             return new LiteralExpressionSyntax(keywordToken, isTrue);
-        }
+        }        
 
         private ExpressionSyntax ParseNumberLiteral()
         {
             var numberToken = MatchToken(SyntaxKind.NumberToken);
             return new LiteralExpressionSyntax(numberToken);
+        }       
+        
+        private ExpressionSyntax ParseStringLiteral()
+        {
+            var stringToken = MatchToken(SyntaxKind.StringToken);
+            return new LiteralExpressionSyntax(stringToken);
         }
 
         private ExpressionSyntax ParseNameExpression()
