@@ -56,6 +56,8 @@ namespace Language.CodeAnalysis.Binding
             new BoundBinaryOperator(SyntaxKind.BitwiseAndToken, BoundBinaryOperatorKind.BitwiseAnd, TypeSymbol.Bool),
             new BoundBinaryOperator(SyntaxKind.BitwiseOrToken, BoundBinaryOperatorKind.BitwiseOr, TypeSymbol.Bool),
             new BoundBinaryOperator(SyntaxKind.BitwiseXorToken, BoundBinaryOperatorKind.BitwiseXor, TypeSymbol.Bool),
+
+            new BoundBinaryOperator(SyntaxKind.PlusToken, BoundBinaryOperatorKind.Addition, TypeSymbol.String),
         };
 
         public static BoundBinaryOperator Bind(SyntaxKind syntaxKind, TypeSymbol leftType, TypeSymbol rightType)
