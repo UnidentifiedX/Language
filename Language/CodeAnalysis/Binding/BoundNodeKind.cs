@@ -19,6 +19,8 @@
         ForStatement,
         GotoStatement,
         LabelStatement,
-        ConditionalGotoStatement
+        ConditionalGotoStatement,
+        CallExpression,
+        ConversionExpression
     }
 }

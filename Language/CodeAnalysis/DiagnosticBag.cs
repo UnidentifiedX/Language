@@ -74,15 +74,39 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
-        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        public void ReportSymbolAlreadyDeclared(TextSpan span, string name)
         {
-            var message = $"Variable '{name}' has already been declared";
+            var message = $"'{name}' has already been declared";
             Report(span, message);
         }
 
         internal void ReportCannotAssign(TextSpan span, string name)
         {
             var message = $"Variable '{name}' is a constant and cannot be assigned to";
+            Report(span, message);
+        }
+
+        public void ReportUndefinedFunction(TextSpan span, string name)
+        {
+            var message = $"Function '{name}' does not exist";
+            Report(span, message);
+        }
+
+        public void ReportWrongArgumentCount(TextSpan span, string name, int expectedCount, int actualCount)
+        {
+            var message = $"Function '{name}' expects {expectedCount} arguments, but received {actualCount}";
+            Report(span, message);
+        }
+
+        public void ReportWrongArgumentType(TextSpan span, string name, TypeSymbol expectedType, TypeSymbol actualType)
+        {
+            var message = $"Parameter '{name}' expects a value of type '{expectedType}' but was provided a value of type '{actualType}'";
+            Report(span, message);
+        }
+
+        public void ReportExpressionMustHaveValue(TextSpan span)
+        {
+            var message = $"Expression must have a value";
             Report(span, message);
         }
     }

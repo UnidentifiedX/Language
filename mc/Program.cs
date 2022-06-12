@@ -82,8 +82,11 @@ namespace Language
 
                 if (!result.Diagnostics.Any())
                 {
-                    Console.WriteLine(result.Value);
-                    previous = compilation;
+                    if(result.Value != null)
+                    {
+                        Console.WriteLine(result.Value);
+                        previous = compilation;
+                    }
                 }
                 else
                 {
