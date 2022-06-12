@@ -148,7 +148,9 @@ namespace Language.CodeAnalysis.Binding
                 case BoundNodeKind.BinaryExpression:
                     return RewriteBinaryExpression((BoundBinaryExpression)node);                
                 case BoundNodeKind.CallExpression:
-                    return RewriteCallExpression((BoundCallExpression)node);
+                    return RewriteCallExpression((BoundCallExpression)node);                
+                case BoundNodeKind.ConversionExpression:
+                    return RewriteConversionExpression((BoundConversionExpression)node);
                 default:
                     throw new Exception($"Undexpected node: {node.Kind}");
             }
@@ -198,7 +200,7 @@ namespace Language.CodeAnalysis.Binding
             return new BoundBinaryExpression(node.Left, node.Op, node.Right);
         }
 
-        private BoundExpression RewriteCallExpression(BoundCallExpression node)
+        protected virtual BoundExpression RewriteCallExpression(BoundCallExpression node)
         {
             ImmutableArray<BoundExpression>.Builder builder = null;
 
@@ -224,6 +226,15 @@ namespace Language.CodeAnalysis.Binding
                 return node;
 
             return new BoundCallExpression(node.Function, builder.MoveToImmutable());
+        }
+
+        protected virtual BoundExpression RewriteConversionExpression(BoundConversionExpression node)
+        {
+            var expression = RewriteExpression(node.Expression);
+            if (expression == node.Expression)
+                return node;
+
+            return new BoundConversionExpression(node.Type, expression);
         }
     }
 }
