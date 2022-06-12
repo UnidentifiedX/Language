@@ -8,7 +8,7 @@ namespace Language.CodeAnalysis.Symbols
 {
     internal static class BuitinFunctions
     {
-        public static FunctionSymbol Print = new FunctionSymbol("print", ImmutableArray.Create(new ParameterSymbol("text", TypeSymbol.String)), TypeSymbol.Void);
+        public static FunctionSymbol Output = new FunctionSymbol("output", ImmutableArray.Create(new ParameterSymbol("text", TypeSymbol.String)), TypeSymbol.Void);
         public static FunctionSymbol Input = new FunctionSymbol("input", ImmutableArray<ParameterSymbol>.Empty, TypeSymbol.String);
 
         internal static IEnumerable<FunctionSymbol> GetAll()
