@@ -204,7 +204,7 @@ namespace Language.CodeAnalysis
             {
                 return Console.ReadLine();
             }
-            else if (node.Function == BuitinFunctions.Print)
+            else if (node.Function == BuitinFunctions.Output)
             {
                 var message = (string)EvaluateExpression(node.Arguments[0]);
                 Console.WriteLine(message);
