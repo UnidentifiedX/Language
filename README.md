@@ -15,4 +15,4 @@ Open-source, extremely verbose interpreted language written in C#. Its main obje
 ## TODO
 - [ ] Better 'for' loop syntax to include increment control
 - [ ] Currently to concatenate string we use the same operator as addition which is the 'plus' word. However I would prefer it to be the '+' symbol so I'll have to work on that
-- [ ] Add a 'dp-while' loop
+- [ ] Add a 'do-while' loop
