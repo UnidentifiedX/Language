@@ -74,9 +74,9 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
-        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        public void ReportSymbolAlreadyDeclared(TextSpan span, string name)
         {
-            var message = $"Variable '{name}' has already been declared";
+            var message = $"'{name}' has already been declared";
             Report(span, message);
         }
 

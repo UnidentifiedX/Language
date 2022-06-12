@@ -100,7 +100,7 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             var diagnostics = @"
-                Variable 'x' has already been declared
+                'x' has already been declared
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -187,6 +187,23 @@ namespace Language.Tests.CodeAnalysis
 
             var diagnostics = @"
                 Cannot convert from type 'boolean' to 'integer'
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }            
+        
+        [Fact]
+        public void Evaluator_Variables_Can_Shadow_Functions()
+        {
+            var text = @"
+                :
+                    constant output represents 42
+                    [output](""test"")
+                .
+            ";
+
+            var diagnostics = @"
+                Function 'output' does not exist
             ";
 
             AssertDiagnostics(text, diagnostics);
