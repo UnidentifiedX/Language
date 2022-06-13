@@ -116,7 +116,7 @@ namespace Language.Tests.CodeAnalysis
 
             var diagnostics = @"
                 Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>
-                Unexpected token <EndOfFileToken>, expected <CloseBraceToken>
+                Unexpected token <EndOfFileToken>, expected <PeriodToken>
             ";
 
             AssertDiagnostics(text, diagnostics);

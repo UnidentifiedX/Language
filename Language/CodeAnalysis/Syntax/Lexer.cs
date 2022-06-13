@@ -74,11 +74,11 @@ namespace Language.CodeAnalysis
                     _position++;
                     break;
                 case ':':
-                    _kind = SyntaxKind.OpenBraceToken;
+                    _kind = SyntaxKind.ColonToken;
                     _position++;
                     break;
                 case '.':
-                    _kind = SyntaxKind.CloseBraceToken;
+                    _kind = SyntaxKind.PeriodToken;
                     _position++;
                     break;                
                 case ',':
