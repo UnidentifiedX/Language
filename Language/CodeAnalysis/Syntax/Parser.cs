@@ -78,7 +78,7 @@ namespace Language.CodeAnalysis
         {
             switch (Current.Kind)
             {
-                case SyntaxKind.OpenBraceToken:
+                case SyntaxKind.ColonToken:
                     return ParseBlockStatement();
                 case SyntaxKind.ConstantKeyword:
                 case SyntaxKind.VariableKeyword:
@@ -98,10 +98,10 @@ namespace Language.CodeAnalysis
         {
             var statements = ImmutableArray.CreateBuilder<StatementSyntax>();
 
-            var openBraceToken = MatchToken(SyntaxKind.OpenBraceToken);
+            var openBraceToken = MatchToken(SyntaxKind.ColonToken);
 
             while(Current.Kind != SyntaxKind.EndOfFileToken &&
-                Current.Kind != SyntaxKind.CloseBraceToken)
+                Current.Kind != SyntaxKind.PeriodToken)
             {
                 var startToken = Current;
 
@@ -113,7 +113,7 @@ namespace Language.CodeAnalysis
                     NextToken();
             }
 
-            var closeBraceToken = MatchToken(SyntaxKind.CloseBraceToken);
+            var closeBraceToken = MatchToken(SyntaxKind.PeriodToken);
 
             return new BlockStatementSyntax(openBraceToken, statements.ToImmutable(), closeBraceToken);
         }

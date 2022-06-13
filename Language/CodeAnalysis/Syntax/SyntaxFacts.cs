@@ -140,9 +140,9 @@ namespace Language.CodeAnalysis
                     return "represents";
                 case SyntaxKind.ModuloToken:
                     return "modulo";
-                case SyntaxKind.OpenBraceToken:
+                case SyntaxKind.ColonToken:
                     return ":";
-                case SyntaxKind.CloseBraceToken:
+                case SyntaxKind.PeriodToken:
                     return ".";                
                 case SyntaxKind.CommaToken:
                     return ",";
