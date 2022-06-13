@@ -68,9 +68,21 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportUndefinedType(TextSpan span, string name)
+        {
+            var message = $"Type '{name}' does not exist";
+            Report(span, message);
+        }
+
         public void ReportCannotConvert(TextSpan span, TypeSymbol fromType, TypeSymbol toType)
         {
             var message = $"Cannot convert from type '{fromType}' to '{toType}'";
+            Report(span, message);
+        }
+
+        internal void ReportCannotConvertImplicitly(TextSpan span, TypeSymbol fromType, TypeSymbol toType)
+        {
+            var message = $"Cannot convert implicitly from type '{fromType}' to '{toType}' (are you missing a cast?)";
             Report(span, message);
         }
 

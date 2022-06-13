@@ -67,6 +67,8 @@
         BitwiseOrToken,
         StringToken,
         CallExpression,
-        CommaToken
+        CommaToken,
+        AsToken,
+        TypeClause
     }
 }

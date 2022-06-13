@@ -146,6 +146,8 @@ namespace Language.CodeAnalysis
                     return ".";                
                 case SyntaxKind.CommaToken:
                     return ",";
+                case SyntaxKind.AsToken:
+                    return "as";
                 case SyntaxKind.IfKeyword:
                     return "if";
                 case SyntaxKind.ElseKeyword:

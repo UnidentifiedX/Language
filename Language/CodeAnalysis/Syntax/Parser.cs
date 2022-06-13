@@ -123,10 +123,27 @@ namespace Language.CodeAnalysis
             var expected = Current.Kind == SyntaxKind.ConstantKeyword ? SyntaxKind.ConstantKeyword : SyntaxKind.VariableKeyword;
             var keyword = MatchToken(expected);
             var identifier = MatchToken(SyntaxKind.IdentifierToken);
+            var typeClause = ParseOptionalTypeClause();
             var equals = MatchToken(SyntaxKind.RepresentsToken);
             var initializer = ParseExpression();
 
-            return new VariableDeclarationSyntax(keyword, identifier, equals, initializer);
+            return new VariableDeclarationSyntax(keyword, identifier, typeClause, equals, initializer);
+        }
+
+        private TypeClauseSyntax ParseOptionalTypeClause()
+        {
+            if (Current.Kind != SyntaxKind.AsToken)
+                return null;
+
+            return ParseTypeClause();
+        }
+
+        private TypeClauseSyntax ParseTypeClause()
+        {
+            var asToken = MatchToken(SyntaxKind.AsToken);
+            var identifier = MatchToken(SyntaxKind.IdentifierToken);
+
+            return new TypeClauseSyntax(asToken, identifier);
         }
 
         private StatementSyntax ParseIfStatement()
