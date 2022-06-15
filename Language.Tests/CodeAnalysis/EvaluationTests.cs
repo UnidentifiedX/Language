@@ -69,6 +69,13 @@ namespace Language.Tests.CodeAnalysis
         [InlineData("not true", false)]
         [InlineData("not false", true)]
 
+        [InlineData("\"test\"", "test")]
+        [InlineData("\"te\"\"st\"", "te\"st")]
+        [InlineData("\"test\" is equal to \"test\"", true)]
+        [InlineData("\"test\" is not equal to \"test\"", false)]        
+        [InlineData("\"test\" is equal to \"abc\"", false)]
+        [InlineData("\"test\" is not equal to \"abc\"", true)]
+
         [InlineData("variable a represents 10", 10)]
         [InlineData(":variable a represents 10 (a multiplied by a).", 100)]
         [InlineData(":variable a represents 0 (a represents 10) multiplied by a.", 100)]
