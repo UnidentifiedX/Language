@@ -69,7 +69,9 @@ namespace Language.CodeAnalysis
                 case "variable":
                     return SyntaxKind.VariableKeyword;                
                 case "while":
-                    return SyntaxKind.WhileKeyword;
+                    return SyntaxKind.WhileKeyword;                
+                case "function":
+                    return SyntaxKind.FunctionKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
 
@@ -140,12 +142,14 @@ namespace Language.CodeAnalysis
                     return "represents";
                 case SyntaxKind.ModuloToken:
                     return "modulo";
-                case SyntaxKind.OpenBraceToken:
+                case SyntaxKind.ColonToken:
                     return ":";
-                case SyntaxKind.CloseBraceToken:
+                case SyntaxKind.PeriodToken:
                     return ".";                
                 case SyntaxKind.CommaToken:
                     return ",";
+                case SyntaxKind.AsToken:
+                    return "as";
                 case SyntaxKind.IfKeyword:
                     return "if";
                 case SyntaxKind.ElseKeyword:
@@ -163,7 +167,9 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.VariableKeyword:
                     return "variable";                
                 case SyntaxKind.WhileKeyword:
-                    return "while";
+                    return "while";                
+                case SyntaxKind.FunctionKeyword:
+                    return "function";
                 case SyntaxKind.BitwiseAndToken:
                     return "&";                
                 case SyntaxKind.BitwiseOrToken:

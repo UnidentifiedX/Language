@@ -2,30 +2,38 @@
 using Language.CodeAnalysis.Symbols;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Language.CodeAnalysis
 {
     internal sealed class Evaluator
     {
-        private readonly BoundBlockStatement _root;
-        private readonly Dictionary<VariableSymbol, object> _variables;
+        private readonly BoundProgram _program;
+        private readonly Dictionary<VariableSymbol, object> _globals;
+        private readonly Stack<Dictionary<VariableSymbol, object>> _locals = new();
         private Random _random;
 
         private object _lastValue;
 
-        public Evaluator(BoundBlockStatement root, Dictionary<VariableSymbol, object> variables)
+        public Evaluator(BoundProgram program, Dictionary<VariableSymbol, object> variables)
         {
-            _root = root;
-            _variables = variables;
+            _program = program;
+            _globals = variables;
+            _locals.Push(new Dictionary<VariableSymbol, object>());
         }
 
         public object Evaluate()
         {
+            return EvaluateStatement(_program.Statement);
+        }
+
+        private object EvaluateStatement(BoundBlockStatement body)
+        {
             var labelToIndex = new Dictionary<BoundLabel, int>();
-            
-            for(int i = 0; i < _root.Statements.Length; i++)
+
+            for (int i = 0; i < body.Statements.Length; i++)
             {
-                if(_root.Statements[i] is BoundLabelStatement l)
+                if (body.Statements[i] is BoundLabelStatement l)
                 {
                     labelToIndex.Add(l.Label, i + 1);
                 }
@@ -33,9 +41,9 @@ namespace Language.CodeAnalysis
 
             var index = 0;
 
-            while (index < _root.Statements.Length)
+            while (index < body.Statements.Length)
             {
-                var s = _root.Statements[index];
+                var s = body.Statements[index];
 
                 switch (s.Kind)
                 {
@@ -75,10 +83,9 @@ namespace Language.CodeAnalysis
         private void EvaluateVariableDeclaration(BoundVariableDeclaration node)
         {
             var value = EvaluateExpression(node.Initializer);
-            _variables[node.Variable] = value;
             _lastValue = value;
-        }        
-     
+            Assign(node.Variable, value);
+        }         
 
         private void EvaluateExpressionStatement(BoundExpressionStatement node)
         {
@@ -115,13 +122,22 @@ namespace Language.CodeAnalysis
 
         private object EvaluateVariableExpression(BoundVariableExpression v)
         {
-            return _variables[v.Variable];
+            if (v.Variable.Kind == SymbolKind.GlobalVariable)
+            {
+                return _globals[v.Variable];
+            }
+            else
+            {
+                var locals = _locals.Peek();
+                return locals[v.Variable];
+            }
         }
 
         private object EvaluateAssignmentExpression(BoundAssignmentExpression a)
         {
             var value = EvaluateExpression(a.Expression);
-            _variables[a.Variable] = value;
+            Assign(a.Variable, value);
+
             return value;
         }
 
@@ -201,19 +217,20 @@ namespace Language.CodeAnalysis
                     throw new Exception($"Unexpected binary operator {b.Op}");
             }
         }
+
         private object EvaluateCallExpression(BoundCallExpression node)
         {
-            if (node.Function == BuitinFunctions.Input)
+            if (node.Function == BuiltinFunctions.Input)
             {
                 return Console.ReadLine();
             }
-            else if (node.Function == BuitinFunctions.Output)
+            else if (node.Function == BuiltinFunctions.Output)
             {
                 var message = (string)EvaluateExpression(node.Arguments[0]);
                 Console.WriteLine(message);
                 return null;
             }
-            else if(node.Function == BuitinFunctions.Random)
+            else if(node.Function == BuiltinFunctions.Random)
             {
                 var max = (int)EvaluateExpression(node.Arguments[0]);
                 if(_random == null)
@@ -223,7 +240,21 @@ namespace Language.CodeAnalysis
             }
             else
             {
-                throw new Exception($"Unexpected function {node.Function}");
+                var locals = new Dictionary<VariableSymbol, object>();
+                for (int i = 0; i < node.Arguments.Length; i++)
+                {
+                    var parameter = node.Function.Parameters[i];
+                    var value = EvaluateExpression(node.Arguments[i]);
+                    locals.Add(parameter, value);
+                }
+
+                _locals.Push(locals);
+
+                var statement = _program.Functions[node.Function];
+                var result = EvaluateStatement(statement);
+
+                _locals.Pop();
+                return result;
             }
         }
 
@@ -239,6 +270,19 @@ namespace Language.CodeAnalysis
                 return Convert.ToString(value);
             else
                 throw new Exception($"Unexpected type {node.Type}");
+        }
+
+        private void Assign(VariableSymbol variable, object value)
+        {
+            if (variable.Kind == SymbolKind.GlobalVariable)
+            {
+                _globals[variable] = value;
+            }
+            else
+            {
+                var locals = _locals.Peek();
+                locals[variable] = value;
+            }
         }
     }
 }

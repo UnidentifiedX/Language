@@ -14,6 +14,7 @@ namespace Language.CodeAnalysis.Binding
         {
             Parent = parent;
         }
+
         public BoundScope Parent { get; }
 
         public bool TryDeclareVariable(VariableSymbol variable) => TryDeclareSymbol(variable);

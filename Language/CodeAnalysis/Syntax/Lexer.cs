@@ -74,11 +74,11 @@ namespace Language.CodeAnalysis
                     _position++;
                     break;
                 case ':':
-                    _kind = SyntaxKind.OpenBraceToken;
+                    _kind = SyntaxKind.ColonToken;
                     _position++;
                     break;
                 case '.':
-                    _kind = SyntaxKind.CloseBraceToken;
+                    _kind = SyntaxKind.PeriodToken;
                     _position++;
                     break;                
                 case ',':
@@ -102,7 +102,13 @@ namespace Language.CodeAnalysis
                     _position++;
                     break;
                 case 'a':
-                    if (LookAhead(1, 2) == "nd")
+                    if(LookAhead(1, 1) == "s")
+                    {
+                        _kind = SyntaxKind.AsToken;
+                        _position += 2;
+                        break;
+                    }
+                    else if (LookAhead(1, 2) == "nd")
                     {
                         _kind = SyntaxKind.AndToken;
                         _position += 3;

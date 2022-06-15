@@ -26,8 +26,8 @@
         NameExpression,
         RepresentsToken,
         ModuloToken,
-        OpenBraceToken,
-        CloseBraceToken,
+        ColonToken,
+        PeriodToken,
         BitwiseNegationToken,
         BitwiseAndToken,
         BitwiseXorToken,
@@ -67,6 +67,12 @@
         BitwiseOrToken,
         StringToken,
         CallExpression,
-        CommaToken
+        CommaToken,
+        AsToken,
+        TypeClause,
+        GlobalStatement,
+        FunctionDeclaration,
+        Parameter,
+        FunctionKeyword
     }
 }

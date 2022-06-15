@@ -116,7 +116,7 @@ namespace Language.Tests.CodeAnalysis
 
             var diagnostics = @"
                 Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>
-                Unexpected token <EndOfFileToken>, expected <CloseBraceToken>
+                Unexpected token <EndOfFileToken>, expected <PeriodToken>
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -132,20 +132,20 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             AssertDiagnostics(text, diagnostics);
-        }          
-        
+        }
+
         [Fact]
         public void Evaluator_NameExpression_Reports_NoErrorForInsertedToken()
         {
-            var text = @"[]";
+            var text = @"1 plus []";
 
             var diagnostics = @"
                 Unexpected token <EndOfFileToken>, expected <IdentifierToken>
             ";
 
             AssertDiagnostics(text, diagnostics);
-        }        
-        
+        }
+
         [Fact]
         public void Evaluator_AssignmentExpression_Reports_Undefined()
         {
@@ -300,6 +300,43 @@ namespace Language.Tests.CodeAnalysis
 
             var diagnostics = @"
                 Binary operator 'multiplied by' is not defined for types 'integer' and 'boolean'
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_InvokeFunctionArguments_NoInfiniteLoop()
+        {
+            var text = @"
+                output(""Hi""[[represents]][)]
+            ";
+
+            var diagnostics = @"
+                Unexpected token <RepresentsToken>, expected <CloseParenthesisToken>
+                Unexpected token <RepresentsToken>, expected <IdentifierToken>
+                Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_FunctionParameters_NoInfiniteLoop()
+        {
+            var text = @"
+                function hi(name as string [[[represents]]][)]
+                :
+                    output(""Hi "" plus name plus ""!"")
+                .[]
+            ";
+
+            var diagnostics = @"
+                Unexpected token <RepresentsToken>, expected <CloseParenthesisToken>
+                Unexpected token <RepresentsToken>, expected <ColonToken>
+                Unexpected token <RepresentsToken>, expected <IdentifierToken>
+                Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>
+                Unexpected token <EndOfFileToken>, expected <PeriodToken>
             ";
 
             AssertDiagnostics(text, diagnostics);

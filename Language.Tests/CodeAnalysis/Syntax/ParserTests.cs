@@ -64,7 +64,7 @@ namespace Language.Tests.CodeAnalysis.Syntax
             var unaryText = SyntaxFacts.GetText(unaryKind);
             var binaryText = SyntaxFacts.GetText(binaryKind);
             var text = $"{unaryText} a {binaryText} b";
-            Language.CodeAnalysis.Syntax.ExpressionSyntax expression = ParseExpression(text);
+            ExpressionSyntax expression = ParseExpression(text);
 
             if (unaryPrcedence >= binaryPrcedence)
             {
@@ -96,12 +96,13 @@ namespace Language.Tests.CodeAnalysis.Syntax
             }
         }
 
-        private static Language.CodeAnalysis.Syntax.ExpressionSyntax ParseExpression(string text)
+        private static ExpressionSyntax ParseExpression(string text)
         {
-            SyntaxTree syntaxTree = SyntaxTree.Parse(text);
+            var syntaxTree = SyntaxTree.Parse(text);
             var root = syntaxTree.Root;
-            var statement = root.Statement;
-            return Assert.IsType<ExpressionStatementSyntax>(statement).Expression;
+            var member = Assert.Single(root.Members);
+            var globalStatement = Assert.IsType<GlobalStatementSyntax>(member);
+            return Assert.IsType<ExpressionStatementSyntax>(globalStatement.Statement).Expression;
         }
 
         public static IEnumerable<object[]> GetBinaryOperatorPairsData()
