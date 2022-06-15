@@ -69,6 +69,10 @@
         CallExpression,
         CommaToken,
         AsToken,
-        TypeClause
+        TypeClause,
+        GlobalStatement,
+        FunctionDeclaration,
+        Parameter,
+        FunctionKeyword
     }
 }

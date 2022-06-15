@@ -17,7 +17,7 @@ namespace Language.CodeAnalysis
         public void AddRange(DiagnosticBag diagnostics)
         {
             _diagnostics.AddRange(diagnostics._diagnostics);
-        }
+        }        
 
         public void Report(TextSpan span, string message)
         {
@@ -62,6 +62,12 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
+        internal void ReportParameterAlreadyDeclared(TextSpan span, string parameterName)
+        {
+            var message = $"A parameter with the name '{parameterName}' has already been declared";
+            Report(span, message);
+        }
+
         public void ReportUndefinedName(TextSpan span, string name)
         {
             var message = $"Variable '{name}' does not exist";
@@ -71,6 +77,12 @@ namespace Language.CodeAnalysis
         public void ReportUndefinedType(TextSpan span, string name)
         {
             var message = $"Type '{name}' does not exist";
+            Report(span, message);
+        }
+
+        internal void ReportFunctionsAreUnsupported(TextSpan span)
+        {
+            var message = $"Functions with return values are unsupported";
             Report(span, message);
         }
 
