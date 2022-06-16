@@ -87,7 +87,8 @@ namespace Language.Tests.CodeAnalysis
         [InlineData(":variable i represents 10 variable result represents 0 while i is greater than 0: result represents result plus i i represents i minus 1. result.", 55)]
         [InlineData(":variable result represents 0 for i represents 1 to 10: result represents result plus i. result.", 55)]
         [InlineData(":variable a represents 10 for i represents 1 to (a represents a minus 1): . a.", 9)]
-        public void SyntaxFact_GetText_RoundTrips(string text, object expectedValue)
+        [InlineData(":variable i represents 0 while i is less than 5: i represents i plus 1 if i is equal to 5 continue. i.", 5)]
+        public void Evaluator_Computes_CorrectValues(string text, object expectedValue)
         {
             AssertValue(text, expectedValue);
         }
