@@ -129,6 +129,34 @@ namespace Language.Tests.CodeAnalysis
 
             AssertDiagnostics(text, diagnostics);
         }        
+
+        [Fact]
+        public void Evaluator_InvokeFunctionArguments_Missing()
+        {
+            var text = @"
+                output([)]
+            ";
+
+            var diagnostics = @"
+                Function 'output' expects 1 arguments, but received 0
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+        
+        [Fact]
+        public void Evaluator_InvokeFunctionArguments_Exceeding()
+        {
+            var text = @"
+                output(""Hello""[, "" "", "" world!""])
+            ";
+
+            var diagnostics = @"
+                Function 'output' expects 1 arguments, but received 3
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
         
         [Fact]
         public void Evaluator_NameExpression_Reports_Undefined()
