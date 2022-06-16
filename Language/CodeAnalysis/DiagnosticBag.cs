@@ -80,12 +80,6 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
-        internal void ReportFunctionsAreUnsupported(TextSpan span)
-        {
-            var message = $"Functions with return values are unsupported";
-            Report(span, message);
-        }
-
         public void ReportCannotConvert(TextSpan span, TypeSymbol fromType, TypeSymbol toType)
         {
             var message = $"Cannot convert from type '{fromType}' to '{toType}'";
@@ -140,6 +134,23 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportInvalidReturn(TextSpan span)
+        {
+            var message = $"The 'return' keyword can only be used within a function";
+            Report(span, message);
+        }
+
+        public void ReportMissingReturnExpression(TextSpan span, TypeSymbol returnType)
+        {
+            var message = $"An expression of type '{returnType}' was expected";
+            Report(span, message);
+        }
+
+        public void ReportInvalidReturnExpression(TextSpan span, string functionName)
+        {
+            var message = $"Function '{functionName}' does not have a return value and hence cannot be followed by an expression";
+            Report(span, message);
+        }
 
     }
 }

@@ -21,6 +21,7 @@
         LabelStatement,
         ConditionalGotoStatement,
         CallExpression,
-        ConversionExpression
+        ConversionExpression,
+        ReturnStatement
     }
 }

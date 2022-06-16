@@ -77,6 +77,8 @@
         ContinueKeyword,
         BreakKeyword,
         ContinueStatement,
-        BreakStatement
+        BreakStatement,
+        ReturnKeyword,
+        ReturnStatement
     }
 }

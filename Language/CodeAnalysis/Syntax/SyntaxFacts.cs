@@ -72,6 +72,8 @@ namespace Language.CodeAnalysis
                     return SyntaxKind.WhileKeyword;                
                 case "function":
                     return SyntaxKind.FunctionKeyword;
+                case "return":
+                    return SyntaxKind.ReturnKeyword;
                 case "break":
                     return SyntaxKind.BreakKeyword;
                 case "continue":
@@ -173,7 +175,9 @@ namespace Language.CodeAnalysis
                 case SyntaxKind.WhileKeyword:
                     return "while";                
                 case SyntaxKind.FunctionKeyword:
-                    return "function";                
+                    return "function";                            
+                case SyntaxKind.ReturnKeyword:
+                    return "return";                
                 case SyntaxKind.BreakKeyword:
                     return "break";                
                 case SyntaxKind.ContinueKeyword:

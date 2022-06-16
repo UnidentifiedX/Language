@@ -72,6 +72,10 @@ namespace Language.CodeAnalysis
                     case BoundNodeKind.LabelStatement:
                         index++;
                         break;
+                    case BoundNodeKind.ReturnStatement:
+                        var returnStatement = (BoundReturnStatement)s;
+                        _lastValue = returnStatement.Expression == null ? null : EvaluateExpression(returnStatement.Expression);
+                        return _lastValue;
                     default:
                         throw new Exception($"Undexpected node {s.Kind}");
                 }
