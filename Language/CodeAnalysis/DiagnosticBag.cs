@@ -128,10 +128,18 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
+        internal void ReportInvalidBreakOrContinue(TextSpan span, string text)
+        {
+            var message = $"'{text}' can ony be used within a loop";
+            Report(span, message);
+        }
+
         public void ReportExpressionMustHaveValue(TextSpan span)
         {
             var message = $"Expression must have a value";
             Report(span, message);
         }
+
+
     }
 }

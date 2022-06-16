@@ -69,6 +69,13 @@ namespace Language.Tests.CodeAnalysis
         [InlineData("not true", false)]
         [InlineData("not false", true)]
 
+        [InlineData("\"test\"", "test")]
+        [InlineData("\"te\"\"st\"", "te\"st")]
+        [InlineData("\"test\" is equal to \"test\"", true)]
+        [InlineData("\"test\" is not equal to \"test\"", false)]        
+        [InlineData("\"test\" is equal to \"abc\"", false)]
+        [InlineData("\"test\" is not equal to \"abc\"", true)]
+
         [InlineData("variable a represents 10", 10)]
         [InlineData(":variable a represents 10 (a multiplied by a).", 100)]
         [InlineData(":variable a represents 0 (a represents 10) multiplied by a.", 100)]
@@ -80,7 +87,8 @@ namespace Language.Tests.CodeAnalysis
         [InlineData(":variable i represents 10 variable result represents 0 while i is greater than 0: result represents result plus i i represents i minus 1. result.", 55)]
         [InlineData(":variable result represents 0 for i represents 1 to 10: result represents result plus i. result.", 55)]
         [InlineData(":variable a represents 10 for i represents 1 to (a represents a minus 1): . a.", 9)]
-        public void SyntaxFact_GetText_RoundTrips(string text, object expectedValue)
+        [InlineData(":variable i represents 0 while i is less than 5: i represents i plus 1 if i is equal to 5 continue. i.", 5)]
+        public void Evaluator_Computes_CorrectValues(string text, object expectedValue)
         {
             AssertValue(text, expectedValue);
         }
@@ -121,6 +129,34 @@ namespace Language.Tests.CodeAnalysis
 
             AssertDiagnostics(text, diagnostics);
         }        
+
+        [Fact]
+        public void Evaluator_InvokeFunctionArguments_Missing()
+        {
+            var text = @"
+                output([)]
+            ";
+
+            var diagnostics = @"
+                Function 'output' expects 1 arguments, but received 0
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+        
+        [Fact]
+        public void Evaluator_InvokeFunctionArguments_Exceeding()
+        {
+            var text = @"
+                output(""Hello""[, "" "", "" world!""])
+            ";
+
+            var diagnostics = @"
+                Function 'output' expects 1 arguments, but received 3
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
         
         [Fact]
         public void Evaluator_NameExpression_Reports_Undefined()

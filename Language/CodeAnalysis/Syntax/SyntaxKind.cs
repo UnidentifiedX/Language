@@ -73,6 +73,10 @@
         GlobalStatement,
         FunctionDeclaration,
         Parameter,
-        FunctionKeyword
+        FunctionKeyword,
+        ContinueKeyword,
+        BreakKeyword,
+        ContinueStatement,
+        BreakStatement
     }
 }
