@@ -124,7 +124,7 @@ namespace Language.CodeAnalysis
 
         internal void ReportInvalidBreakOrContinue(TextSpan span, string text)
         {
-            var message = $"'{text}' can ony be used within a loop";
+            var message = $"'{text}' can only be used within a loop";
             Report(span, message);
         }
 
