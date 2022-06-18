@@ -193,8 +193,25 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             AssertDiagnostics(text, diagnostics);
-        }        
-        
+        }
+
+
+        [Fact]
+        public void Evaluator_AssignmentExpression_Reports_NotAVariable()
+        {
+            var text = @"
+                :
+                    [print] represents 42
+                .
+            ";
+
+            var diagnostics = @"
+                Variable 'print' does not exist
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
         [Fact]
         public void Evaluator_AssignmentExpression_Reports_CannotAssign()
         {
@@ -227,7 +244,21 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             AssertDiagnostics(text, diagnostics);
-        }            
+        }              
+        
+        [Fact]
+        public void Evaluator_CallExpression_Reports_Undefined()
+        {
+            var text = @"
+                    [foo](42)
+            ";
+
+            var diagnostics = @"
+                Function 'foo' does not exist
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }                             
         
         [Fact]
         public void Evaluator_Variables_Can_Shadow_Functions()
@@ -240,7 +271,7 @@ namespace Language.Tests.CodeAnalysis
             ";
 
             var diagnostics = @"
-                Function 'output' does not exist
+                'output' is not a function
             ";
 
             AssertDiagnostics(text, diagnostics);
