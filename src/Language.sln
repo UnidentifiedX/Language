@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "li", "li\li.csproj", "{22BAF8D0-8BAE-48C4-B657-11A0544B641B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Language", "Language\Language.csproj", "{CA8A04B6-1445-45CD-8655-88467ADBF7D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Language.Tests", "Language.Tests\Language.Tests.csproj", "{8F3D7FCF-604A-4A6B-8AAB-98742F4A1564}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22BAF8D0-8BAE-48C4-B657-11A0544B641B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22BAF8D0-8BAE-48C4-B657-11A0544B641B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22BAF8D0-8BAE-48C4-B657-11A0544B641B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22BAF8D0-8BAE-48C4-B657-11A0544B641B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA8A04B6-1445-45CD-8655-88467ADBF7D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA8A04B6-1445-45CD-8655-88467ADBF7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA8A04B6-1445-45CD-8655-88467ADBF7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA8A04B6-1445-45CD-8655-88467ADBF7D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F3D7FCF-604A-4A6B-8AAB-98742F4A1564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F3D7FCF-604A-4A6B-8AAB-98742F4A1564}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F3D7FCF-604A-4A6B-8AAB-98742F4A1564}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F3D7FCF-604A-4A6B-8AAB-98742F4A1564}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B626074B-A8BA-4FEE-BD27-E83A4C454457}
+	EndGlobalSection
+EndGlobal
