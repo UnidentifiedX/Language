@@ -68,21 +68,21 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
-        public void ReportUndefinedName(TextSpan span, string name)
+        public void ReportUndefinedVariable(TextSpan span, string name)
         {
             var message = $"Variable '{name}' does not exist";
+            Report(span, message);
+        }
+
+        public void ReportNotAVariable(TextSpan span, string name)
+        {
+            var message = $"'{name}' is not a variable";
             Report(span, message);
         }
 
         public void ReportUndefinedType(TextSpan span, string name)
         {
             var message = $"Type '{name}' does not exist";
-            Report(span, message);
-        }
-
-        internal void ReportFunctionsAreUnsupported(TextSpan span)
-        {
-            var message = $"Functions with return values are unsupported";
             Report(span, message);
         }
 
@@ -116,6 +116,12 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportNotAFunction(TextSpan span, string name)
+        {
+            var message = $"'{name}' is not a function";
+            Report(span, message);
+        }
+
         public void ReportWrongArgumentCount(TextSpan span, string name, int expectedCount, int actualCount)
         {
             var message = $"Function '{name}' expects {expectedCount} arguments, but received {actualCount}";
@@ -130,7 +136,13 @@ namespace Language.CodeAnalysis
 
         internal void ReportInvalidBreakOrContinue(TextSpan span, string text)
         {
-            var message = $"'{text}' can ony be used within a loop";
+            var message = $"'{text}' can only be used within a loop";
+            Report(span, message);
+        }
+
+        public void ReportAllPathsMustReturn(TextSpan span)
+        {
+            var message = $"Not all code paths return a value";
             Report(span, message);
         }
 
@@ -140,6 +152,22 @@ namespace Language.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportInvalidReturn(TextSpan span)
+        {
+            var message = $"The 'return' keyword can only be used within a function";
+            Report(span, message);
+        }
 
+        public void ReportMissingReturnExpression(TextSpan span, TypeSymbol returnType)
+        {
+            var message = $"An expression of type '{returnType}' was expected";
+            Report(span, message);
+        }
+
+        public void ReportInvalidReturnExpression(TextSpan span, string functionName)
+        {
+            var message = $"Function '{functionName}' does not have a return value and hence cannot be followed by an expression";
+            Report(span, message);
+        }
     }
 }
