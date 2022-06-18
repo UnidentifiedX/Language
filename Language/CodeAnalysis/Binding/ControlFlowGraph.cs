@@ -313,12 +313,9 @@ namespace Language.CodeAnalysis.Binding
 
             foreach (var branch in graph.End.Incoming)
             {
-                foreach (var statement in branch.From.Statements)
-                {
-                    var lastStatment = branch.From.Statements.Last();
-                    if(lastStatment.Kind != BoundNodeKind.ReturnStatement)
-                        return false;
-                }
+                var lastStatment = branch.From.Statements.LastOrDefault();
+                if(lastStatment == null || lastStatment.Kind != BoundNodeKind.ReturnStatement)
+                    return false;
             }
 
             return true;

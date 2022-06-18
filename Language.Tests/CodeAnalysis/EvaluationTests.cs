@@ -577,6 +577,22 @@ namespace Language.Tests.CodeAnalysis
             AssertDiagnostics(text, diagnostics);
         }
 
+        [Fact]
+        public void Evaluator_FunctionReturn_Missing()
+        {
+            var text = @"
+                function [add](a as integer, b as integer) as integer
+                :
+                .
+            ";
+
+            var diagnostics = @"
+                Not all code paths return a value
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
         private static void AssertValue(string text, object expectedValue)
         {
             var syntaxTree = SyntaxTree.Parse(text);
