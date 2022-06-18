@@ -1,4 +1,5 @@
 @echo off
 
-dotnet build
-dotnet test .\Language.Tests\Language.Tests.csproj
+
+dotnet build .\src
+dotnet test .\src\Language.Tests\Language.Tests.csproj
