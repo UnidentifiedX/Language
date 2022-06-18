@@ -1,0 +1,3 @@
+output("What's your name?")
+constant name represents input()
+output("Hello " plus name plus "!")
