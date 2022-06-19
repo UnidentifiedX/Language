@@ -2,26 +2,43 @@
 using Language.CodeAnalysis.Text;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
 
 namespace Language.CodeAnalysis
 {
     public sealed class SyntaxTree
     {
-        private SyntaxTree(SourceText text)
-        {            
-            var parser = new Parser(text);
-            var root = parser.ParseCompilationUnit();
-            var diagnostics = parser.Diagnostics.ToImmutableArray();
+        private delegate void ParseHandler(SyntaxTree syntaxTree, bool removeWhiteSpace, out CompilationUnitSyntax root, out ImmutableArray<Diagnostic> diagnostics);
 
+        private SyntaxTree(SourceText text, bool removeWhitespace, ParseHandler handler)
+        {
             Text = text;
-            Diagnostics = parser.Diagnostics.ToImmutableArray();
+            handler(this, removeWhitespace, out var root, out var diagnostics);
+
+            Diagnostics = diagnostics;
             Root = root;
         }
 
         public SourceText Text { get; }
         public ImmutableArray<Diagnostic> Diagnostics { get; }
         public CompilationUnitSyntax Root { get; }
+
+
+        public static SyntaxTree Load(string fileName)
+        {
+            var text = File.ReadAllText(fileName);
+            var sourceText = SourceText.From(text, fileName);
+
+            return Parse(sourceText);
+        }
+
+        private static void Parse(SyntaxTree syntaxTree, bool removeWhitespace, out CompilationUnitSyntax root, out ImmutableArray<Diagnostic> diagnostics)
+        {
+            var parser = new Parser(syntaxTree);
+            root = parser.ParseCompilationUnit();
+            diagnostics = parser.Diagnostics.ToImmutableArray();
+        }
 
         public static SyntaxTree Parse(string text)
         {
@@ -31,7 +48,7 @@ namespace Language.CodeAnalysis
         
         public static SyntaxTree Parse(SourceText text)
         {
-            return new SyntaxTree(text);
+            return new SyntaxTree(text, removeWhitespace: false, Parse);
         }
 
         public static ImmutableArray<SyntaxToken> ParseTokens(string text, bool removeWhitespace)
@@ -53,22 +70,32 @@ namespace Language.CodeAnalysis
         
         public static ImmutableArray<SyntaxToken> ParseTokens(SourceText text, bool removeWhitespace, out ImmutableArray<Diagnostic> diagnostics)
         {
-            IEnumerable<SyntaxToken> LexTokens(Lexer lexer)
+            var tokens = new List<SyntaxToken>();
+
+            void ParseTokens(SyntaxTree st, bool removeWhitespace, out CompilationUnitSyntax root, out ImmutableArray<Diagnostic> d)
             {
+                root = null;
+
+                var l = new Lexer(st);
                 while (true)
                 {
-                    var token = lexer.Lex();
-                    if (token.Kind == SyntaxKind.EndOfFileToken) break;
+                    var token = l.Lex();
+                    if (token.Kind == SyntaxKind.EndOfFileToken)
+                    {
+                        root = new CompilationUnitSyntax(st, ImmutableArray<MemberSyntax>.Empty, token);
+                        break;
+                    }
                     if (removeWhitespace && token.Kind == SyntaxKind.WhitespaceToken) continue;
 
-                    yield return token;
+                    tokens.Add(token);
                 }
+
+                d = l.Diagnostics.ToImmutableArray();
             }
 
-            var l = new Lexer(text);
-            var result = LexTokens(l).ToImmutableArray();
-            diagnostics = l.Diagnostics.ToImmutableArray();
-            return result;
+            var syntaxTree = new SyntaxTree(text, removeWhitespace, ParseTokens);
+            diagnostics = syntaxTree.Diagnostics.ToImmutableArray();
+            return tokens.ToImmutableArray();
         }
     }
 }

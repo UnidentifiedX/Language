@@ -15,13 +15,14 @@ namespace Language.CodeAnalysis
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
 
         private readonly SourceText _text;
+        private readonly SyntaxTree _syntaxTree;
         private int _position;
         
 
-        public Parser(SourceText text)
+        public Parser(SyntaxTree syntaxTree)
         {
             var tokens = new List<SyntaxToken>();
-            var lexer = new Lexer(text);
+            var lexer = new Lexer(syntaxTree);
             SyntaxToken token;
             do
             {
@@ -33,7 +34,8 @@ namespace Language.CodeAnalysis
                 }
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
-            _text = text;
+            _syntaxTree = syntaxTree;
+            _text = syntaxTree.Text;
             _tokens = tokens.ToImmutableArray();
             _diagnostics.AddRange(lexer.Diagnostics);
         }
@@ -62,8 +64,8 @@ namespace Language.CodeAnalysis
             if (Current.Kind == kind)
                 return NextToken();
 
-            _diagnostics.ReportUnexpectedToken(Current.Span, Current.Kind, kind);
-            return new SyntaxToken(kind, Current.Position, null, null);
+            _diagnostics.ReportUnexpectedToken(Current.Location, Current.Kind, kind);
+            return new SyntaxToken(_syntaxTree, kind, Current.Position, null, null);
         }
 
         public CompilationUnitSyntax ParseCompilationUnit()
@@ -71,7 +73,7 @@ namespace Language.CodeAnalysis
             var members = ParseMembers();
             var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
 
-            return new CompilationUnitSyntax(members, endOfFileToken);
+            return new CompilationUnitSyntax(_syntaxTree, members, endOfFileToken);
         }
 
         private ImmutableArray<MemberSyntax> ParseMembers()
@@ -109,7 +111,7 @@ namespace Language.CodeAnalysis
             var type = ParseOptionalTypeClause();
             var body = ParseBlockStatement();
 
-            return new FunctionDeclarationSyntax(functionKeyword, identifier, openParenthesisToken, parameters, closeParenthesisToken, type, body);
+            return new FunctionDeclarationSyntax(_syntaxTree, functionKeyword, identifier, openParenthesisToken, parameters, closeParenthesisToken, type, body);
         }
 
         private SeparatedSyntaxList<ParameterSyntax> ParseParameterList()
@@ -143,13 +145,13 @@ namespace Language.CodeAnalysis
             var identifier = MatchToken(SyntaxKind.IdentifierToken);
             var type = ParseTypeClause();
 
-            return new ParameterSyntax(identifier, type);
+            return new ParameterSyntax(_syntaxTree, identifier, type);
         }
 
         private MemberSyntax ParseGlobalStatement()
         {
             var statement = ParseStatement();
-            return new GlobalStatementSyntax(statement);
+            return new GlobalStatementSyntax(_syntaxTree, statement);
         }
 
         private StatementSyntax ParseStatement()
@@ -199,7 +201,7 @@ namespace Language.CodeAnalysis
 
             var closeBraceToken = MatchToken(SyntaxKind.PeriodToken);
 
-            return new BlockStatementSyntax(openBraceToken, statements.ToImmutable(), closeBraceToken);
+            return new BlockStatementSyntax(_syntaxTree, openBraceToken, statements.ToImmutable(), closeBraceToken);
         }
 
         private StatementSyntax ParseVariableDeclaration()
@@ -211,7 +213,7 @@ namespace Language.CodeAnalysis
             var equals = MatchToken(SyntaxKind.RepresentsToken);
             var initializer = ParseExpression();
 
-            return new VariableDeclarationSyntax(keyword, identifier, typeClause, equals, initializer);
+            return new VariableDeclarationSyntax(_syntaxTree, keyword, identifier, typeClause, equals, initializer);
         }
 
         private TypeClauseSyntax ParseOptionalTypeClause()
@@ -227,7 +229,7 @@ namespace Language.CodeAnalysis
             var asToken = MatchToken(SyntaxKind.AsToken);
             var identifier = MatchToken(SyntaxKind.IdentifierToken);
 
-            return new TypeClauseSyntax(asToken, identifier);
+            return new TypeClauseSyntax(_syntaxTree, asToken, identifier);
         }
 
         private StatementSyntax ParseIfStatement()
@@ -237,7 +239,7 @@ namespace Language.CodeAnalysis
             var statement = ParseStatement();
             var elseClause = ParseElseClause();
 
-            return new IfStatementSyntax(keyword, condition, statement, elseClause);
+            return new IfStatementSyntax(_syntaxTree, keyword, condition, statement, elseClause);
         }
         private StatementSyntax ParseForStatement()
         {
@@ -249,7 +251,7 @@ namespace Language.CodeAnalysis
             var upperBound = ParseExpression();
             var body = ParseStatement();
 
-            return new ForStatementSyntax(keyword, identifier, representsToken, lowerBound, toKeyword, upperBound, body);
+            return new ForStatementSyntax(_syntaxTree, keyword, identifier, representsToken, lowerBound, toKeyword, upperBound, body);
         }
 
         private ElseClauseSyntax ParseElseClause()
@@ -260,7 +262,7 @@ namespace Language.CodeAnalysis
             var keyword = NextToken();
             var statement = ParseStatement();
 
-            return new ElseClauseSyntax(keyword, statement);
+            return new ElseClauseSyntax(_syntaxTree, keyword, statement);
         }
 
         private StatementSyntax ParseWhileStatement()
@@ -269,19 +271,19 @@ namespace Language.CodeAnalysis
             var condition = ParseExpression();
             var body = ParseStatement();
 
-            return new WhileStatementSyntax(keyword, condition, body);
+            return new WhileStatementSyntax(_syntaxTree, keyword, condition, body);
         }
 
         private StatementSyntax ParseBreakStatement()
         {
             var keyword = MatchToken(SyntaxKind.BreakKeyword);
-            return new BreakStatementSyntax(keyword);
+            return new BreakStatementSyntax(_syntaxTree, keyword);
         }
 
         private StatementSyntax ParseContinueStatement()
         {
             var keyword = MatchToken(SyntaxKind.ContinueKeyword);
-            return new ContinueStatementSyntax(keyword);
+            return new ContinueStatementSyntax(_syntaxTree, keyword);
         }
 
         private StatementSyntax ParseReturnStatement()
@@ -293,13 +295,13 @@ namespace Language.CodeAnalysis
             var sameLine = !isEndOfFile && keywordLine == currentLine;
             var expression = sameLine ? ParseExpression() : null;
 
-            return new ReturnStatementSyntax(keyword, expression);
+            return new ReturnStatementSyntax(_syntaxTree, keyword, expression);
         }
 
         private ExpressionStatementSyntax ParseExpressionStatement()
         {
             var expression = ParseExpression();
-            return new ExpressionStatementSyntax(expression);
+            return new ExpressionStatementSyntax(_syntaxTree, expression);
         }
 
         private ExpressionSyntax ParseExpression()
@@ -315,7 +317,7 @@ namespace Language.CodeAnalysis
                 var operatorToken = NextToken();
                 var right = ParseAssignmentExpression();
                 
-                return new AssignmentExpressionSyntax(identifierToken, operatorToken, right);
+                return new AssignmentExpressionSyntax(_syntaxTree, identifierToken, operatorToken, right);
             }
 
             return ParseBinaryExpression();
@@ -330,7 +332,7 @@ namespace Language.CodeAnalysis
                 var operatorToken = NextToken();
                 var operand = ParseBinaryExpression(unaryOperatorPrecedence);
 
-                left = new UnaryExpressionSyntax(operatorToken, operand);
+                left = new UnaryExpressionSyntax(_syntaxTree, operatorToken, operand);
             }
             else
             {
@@ -345,7 +347,7 @@ namespace Language.CodeAnalysis
 
                 var operatorToken = NextToken();
                 var right = ParseBinaryExpression(precedence);
-                left = new BinaryExpressionSyntax(left, operatorToken, right);
+                left = new BinaryExpressionSyntax(_syntaxTree, left, operatorToken, right);
             }
 
             return left;
@@ -376,7 +378,7 @@ namespace Language.CodeAnalysis
             var expression = ParseExpression();
             var right = MatchToken(SyntaxKind.CloseParenthesisToken);
 
-            return new ParenthesizedExpressionSyntax(left, expression, right);
+            return new ParenthesizedExpressionSyntax(_syntaxTree, left, expression, right);
         }
 
         private ExpressionSyntax ParseBooleanLiteral()
@@ -384,19 +386,19 @@ namespace Language.CodeAnalysis
             var isTrue = Current.Kind == SyntaxKind.TrueKeyword;
             var keywordToken = isTrue ? MatchToken(SyntaxKind.TrueKeyword) : MatchToken(SyntaxKind.FalseKeyword);
 
-            return new LiteralExpressionSyntax(keywordToken, isTrue);
+            return new LiteralExpressionSyntax(_syntaxTree, keywordToken, isTrue);
         }        
 
         private ExpressionSyntax ParseNumberLiteral()
         {
             var numberToken = MatchToken(SyntaxKind.NumberToken);
-            return new LiteralExpressionSyntax(numberToken);
+            return new LiteralExpressionSyntax(_syntaxTree, numberToken);
         }       
         
         private ExpressionSyntax ParseStringLiteral()
         {
             var stringToken = MatchToken(SyntaxKind.StringToken);
-            return new LiteralExpressionSyntax(stringToken);
+            return new LiteralExpressionSyntax(_syntaxTree, stringToken);
         }
 
         private ExpressionSyntax ParseNameOrCallExpression()
@@ -415,7 +417,7 @@ namespace Language.CodeAnalysis
             var arguments = ParseArguments();
             var closeParenthesisToken = MatchToken(SyntaxKind.CloseParenthesisToken);
 
-            return new CallExpressionSyntax(identifier, openParenthesisToken, arguments, closeParenthesisToken);
+            return new CallExpressionSyntax(_syntaxTree, identifier, openParenthesisToken, arguments, closeParenthesisToken);
         }
 
         private SeparatedSyntaxList<ExpressionSyntax> ParseArguments()
@@ -447,7 +449,7 @@ namespace Language.CodeAnalysis
         private ExpressionSyntax ParseNameExpression()
         {
             var identifierToken = MatchToken(SyntaxKind.IdentifierToken);
-            return new NameExpressionSyntax(identifierToken);
+            return new NameExpressionSyntax(_syntaxTree, identifierToken);
         }
     }
 }

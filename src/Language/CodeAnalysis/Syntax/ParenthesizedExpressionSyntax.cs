@@ -9,7 +9,8 @@ namespace Language.CodeAnalysis.Syntax
 {
     sealed class ParenthesizedExpressionSyntax : ExpressionSyntax
     {
-        public ParenthesizedExpressionSyntax(SyntaxToken openParenthesis, ExpressionSyntax expression, SyntaxToken closeParenthesis)
+        public ParenthesizedExpressionSyntax(SyntaxTree syntaxTree, SyntaxToken openParenthesis, ExpressionSyntax expression, SyntaxToken closeParenthesis)
+            : base(syntaxTree)
         {
             OpenParenthesisToken = openParenthesis;
             Expression = expression;

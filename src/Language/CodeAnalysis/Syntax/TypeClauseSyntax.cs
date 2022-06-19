@@ -2,7 +2,8 @@
 {
     public sealed class TypeClauseSyntax : SyntaxNode
     {
-        public TypeClauseSyntax(SyntaxToken asToken, SyntaxToken identifier)
+        public TypeClauseSyntax(SyntaxTree syntaxTree, SyntaxToken asToken, SyntaxToken identifier) 
+            : base(syntaxTree)
         {
             AsToken = asToken;
             Identifier = identifier;
